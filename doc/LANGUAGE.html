@@ -1,0 +1,268 @@
+<html>
+<head>
+<title>Lispel: Language Reference</title>
+</head>
+
+<body bgcolor="white">
+<table width="100%">
+<tr>
+<td align="left"><img src="lispel50.gif" alt="Lispel logo">
+<td align="right"><h1>Language Reference</h1></tr>
+</table>
+
+<blockquote>
+ This document describes the core language implemented by the default
+ interpreter implementation. When the first finalized version of Lispel 
+ is available, there should also be some extension packages ready for
+ download. These extensions won't be described here, as they aren't part
+ of the core language. The core language roughly resembles the Schame language
+ as described in the R4RS.
+</blockquote>
+<p>
+
+<hr noshade>
+<h2>Design Principles</h2>
+
+ <p>The general idea behind Lispel is to provide a Scheme interpreter which
+ can easily be embedded into (already existing) C++ programs. But it is
+ also possible (just like it is in any other scripting language) to use
+ Lispel as a stand-alone interpreter with some user-supplied extensions.</p>
+
+ <p>This basically requires that you can on the one hand add new functions
+ and on the other hand this idea is moved much ahead when the type
+ system itself is extensible. Lispel provides both possibilities.
+ The strict object-oriented implementation of the interpreter revealed,
+ ehm, design flaws in the Scheme language. In R4RS, the types required
+ for a standards compliant implementation are mostly unrelated and hence,
+ most functions can only applied to one specific type.</p>
+
+ <p><strong>META:</strong> this paragraph is obsolete!<br>
+ While implementing types based on C++ classes it became obvious that types
+ can be divided into three classes: atomic types (or scalar types), 
+ unidirectional sequences (e.g. consed lists) and random access sequences
+ (e.g. vectors). This is no genious idea, it is simply the result of basing
+ the implementation on STL container types and iterators. As both concepts,
+ containers and iterators, are of great practical use and should be familiar
+ to OO-Programmers, I decided to add the concept of iterators to the core
+ language. All builtins that worked on containers in original Lisp or
+ Scheme will operate on iterators in Lispel. Here is a short example:</p>
+<pre>
+   &gt; (define aVector #(1 2 3 4))
+   &gt; (map display (forward-iterator aVector))
+   1 2 3
+</pre>
+  <p>In R4RS-Scheme map is the only function which can be used to apply a 
+  function to a sequence and, even worse, map only works for lists. If
+  you wanted to use similar functionality with vectors, you would have to
+  define a function 'vector-map' on your own. From an OOP-view, this isn't
+  acceptable at all.</p>
+
+
+<hr noshade>
+<h2>Language Reference</h2>
+
+ <p>In this chapter you will find a quick reference of the Lispel functions
+ provided by the core interpreter distribution. The functions are grouped
+ into command subsets, each of which has to be explicitly added to each
+ interpreter instance. This allows your applications some control over what
+ functionality is available on the scripting language level. If you for
+ example don't want to allow or simply don't need file accesses, then you
+ can omit the call to the <code>addPortCommands</code>
+ API function during the interpreter initialization sequence.</p>
+
+<h3>Syntax</h3>
+<strong>[META: MISSING]</strong>
+<p>
+
+<h3>Data Types</h3>
+<strong>[META: most types are still MISSING]</strong>
+ 
+ <p>This section describes the various data types supported by Lispel.
+ You should keep in mind that whenever the lexical form of data types is
+ described that the scanner's behaviour can be changed by manipulating the
+ character class table. The following descriptions always refers to the 
+ scanner's default behaviour as it is provided after calling the API function
+ <code>initLexerModule()</code>.</p>
+
+ <h4>Character classes</h4>
+ <p>This are  the default character classes the scanner uses to recognize
+ tokens in Lispel programs:
+ <pre>
+ ALPHA   ::= [a-zA-Z]
+ DECIMAL ::= [0-9]
+ </pre></p>
+
+ <h4>Booleans</h4>
+
+ <p>In contrast to Lisp and just like Scheme Lispel supports a boolean type.
+ They are written as <code>#t</code> for true and <code>#f</code> for false.
+ In boolean tests, all values except <code>#f</code> are regarded as true, 
+ <code>#t</code> mainly exists for clarity of notation. For example, all
+ builtin predicates will return <code>#t</code> instead of some other arbitrary
+ value to return true values.
+ <pre>
+ boolean ::= #t | #f
+ </pre></p>
+
+ <h4>Numbers</h4>
+
+ <p>Lispel recognizes integer and double values as supported by the underlying
+ system (ie. the C++ compiler used to compile Lispel). It is not planned to
+ support big integers (found in many lisp implementations), rationals or
+ complex numbers. Integer number are simple a sequence of decimal digits,
+ double values are a sequence of decimal digits, a dot and then again a
+ sequence of digits. To make this more clear:
+ <pre>
+ integer ::= {DECIMAL}+
+ double  ::= {DECIMAL}+'.'{DECIMAL}+
+ </pre></p>
+
+ <p><strong>NOTE:</strong> The feature described here currently isn't
+ implemented!<br>
+ Numbers with a radix other than 10 can be read by prefixing them with one
+ of the following:
+ <ul>
+ <li>???
+ </ul></p>
+
+ <h4>Keywords</h4>
+
+ <p>Keywords are similar to symbols in that they are identifiers which are
+ used give things a name. The evaluator treats keywords specially as they
+ always evaluate to themselves (so you don't have to quote them). This makes
+ them quite handy in many situations, for example as keys for hash tables.
+ Keywords tokens are (by default) sequences of characters introduced by a 
+ colon:
+ <pre>
+ keyword ::= ':'{ALPHA}+
+ </pre></p>
+
+
+<h3>Core Commands</h3>
+
+  <p>The core commands are made available by calling the addCoreCommands API
+  function for each Interpreter instance.</p>
+
+ <h4>Special forms</h4>
+ <p>As the current implementation doesn't support macros, all special forms
+ are implemented as builtins. Whenever you instantiate an interpreter you
+ should at least add the functions described in this section.</p>
+
+  <ul>
+  <li><code>(define <symbol> &lt;expr&gt;)</code><br>
+  Binds the value of <code>&lt;expr&gt;</code> to <code>&lt;symbol&gt;</code>
+  in the toplevel binding environment. If the symbol is already defined it's
+  value will be overwritten.<br>
+  <strong>Returns:</strong>The symbol which was assigned a value.
+
+  <li><code>(quote &lt;expr&gt;)</code><br>
+  Avoid evaluation of an expression.<br>
+  <strong>Returns:</strong>The expression passed as a parameter without
+  evaluating it.
+
+  <li><code>(if &lt;expr1&gt; &lt;expr2&gt; &lt;expr3&gt;)</code><br>
+  Conditionally evaluates either expr2 or expr3, depending on the boolean
+  value of expr1. expr3 will only be evaluated if expr1 evaluates to
+  <code>#f</code>.<br>
+  <strong>Returns:</strong>The result of evaluating either expr2 or expr3.
+
+  <li><code>(and &lt;expr1&gt; ... &lt;exprn&gt;)</code><br>
+  Evaluates the expressions passed as arguments from left to right until an
+  expression evaluates to <code>#f</code>.<br>
+  <strong>Returns:</strong><code>#f</code> if any of the expressions evaluated   to false or the value of the expression last evaluated, else.
+
+  <li><code>(or &lt;expr1&gt; ... &lt;exprn&gt;)</code><br>
+  <li><code>(cond &lt;clause&gt; ... &lt;clause&gt;)</code><br>
+  <li><code>(let &lt;bindings&gt; &lt;expr1&gt; ... &lt;exprn&gt;)</code><br>
+  <li><code>(let* &lt;bindings&gt; &lt;expr1&gt; ... &lt;exprn&gt;)</code><br>
+
+  </ul>
+
+ <h4>Basic Functions</h4>
+ <p>Some of the functions described here might only be available after 
+ loading the file <code>lispellib.scm</code> into the interpreter.</p>
+
+ <ul>
+ <li><code>(display &lt;expr&gt;)</code>
+ <li><code>(begin &lt;expr1&gt; ... &lt; exprn&gt;)</code>
+ <li><code>(car &lt;pair&gt;)</code>
+ <li><code>(cdr &lt;pair&gt)</code>
+ <li><code>(eq? &lt;expr1&gt; &lt;expr2&gt;)</code>
+ <li><code>(eqv? &lt;expr1&gt; &lt;expr2&gt;)</code>
+ <li><code>(cons &lt;expr1&gt; &lt;expr2&gt;)</code>
+ <li><code>(boolean? &lt;expr&gt;)</code>
+ <li><code>(symbol? &lt;expr&gt;)</code>
+ <li><code>(char? &lt;expr&gt;)</code>
+ <li><code>(pair? &lt;expr&gt;)</code>
+ <li><code>(double? &lt;expr&gt;)</code>
+ <li><code>(integer? &lt;expr&gt;)</code>
+ <li><code>(string? &lt;expr&gt;)</code>
+ <li><code>(keyword? &lt;expr&gt;)</code>
+ <li><code>(hashtable? &lt;expr&gt;)</code>
+ <li><code>(set? &lt;expr&gt;)</code>
+ <li><code>(not &lt;expr&gt;)</code>
+ <li><code>(memstat)</code>
+ <li><code>(gc)</code>
+ </ul>
+
+<h3>List Processing Commands</h3>
+
+ <p>The functions described in this section provide basic features for
+ manipulating lists, the most important data structure in all Lisp dialects.
+ [META: should cons and pair? be moved here?]</p>
+
+ <ul>
+ <li><code>(list &lt;expr1&gt; ... &lt;exprn&gt;)</code>
+ <li><code>(length &lt;list&gt;)</code>
+ <li><code>(null? &lt;expr&gt;)</code>
+ <li><code>(set-car! &lt;pair&gt; &lt;obj&gt;)</code>
+ <li><code>(set-cdr! &lt;pair&gt; &lt;obj&gt;)</code>
+ </ul>
+ <p>
+
+<h3>Math Commands</h3>
+
+ <p>The math commands support the most common mathematical operations on 
+ integers (referred to as exact numbers) and doubles (referred to as
+ inexact numbers). As an extension to Scheme, Lispel also supports
+ arithmetic operations on vectors (of doubles). Numeric vectors are handled
+ transparently as a datatype of their own to enable efficient computations.</p>
+
+ <ul>
+ <li><code>(+)</code>
+ <li><code>(+ &lt;m_op&gt;)</code>
+ <li><code>(+  &lt;m_op1&gt; ... &lt;m_opn&gt;)</code>
+ <li><code>(*)</code>
+ <li><code>(* &lt;m_op&gt;)</code>
+ <li><code>(*  &lt;m_op1&gt; ... &lt;m_opn&gt;)</code>
+ <li><code>(- &lt;m_op&gt;)</code>
+ <li><code>(-  &lt;m_op1&gt; ... &lt;m_opn&gt;)</code>
+ <li><code>(/ &lt;m_op&gt;)</code>
+ <li><code>(/  &lt;m_op1&gt; ... &lt;m_opn&gt;)</code>
+ <li><code>(= &lt;m_op1&gt; &lt;m_op2&gt;)</code>
+ <li><code>(< &lt;m_op1&gt; &lt;m_op2&gt;)</code>
+ <li><code>(> &lt;m_op1&gt; &lt;m_op2&gt;)</code>
+ </ul>
+ <p>
+
+<h3>Hashtable commands</h3>
+
+ <ul>
+ <li><code>(make-hash)</code>
+ <li><code>(hash-get &lt;table&gt; &lt;key&gt;)</code>
+ <li><code>(hash-set &lt;table&gt; &lt;key&gt; &lt;value&gt;)</code>
+ <li><code>(hash-clear &lt;table&gt;)</code>
+ <li><code>(hash-size &lt;table&gt;)</code>
+ <li><code>(hash-remove &lt;table&gt; &lt;key&gt;)
+ </ul>
+ <p>
+
+<p>
+<hr noshade>
+<p align="right"><font size="-1">
+Lispel 0.0.1,<br>(c) 1999 by
+<a href="mailto:msaure@rz.uni-osnabrueck.de">Michael Saure</a>
+</font></p>
+</body>
+</html>
+

@@ -1,0 +1,176 @@
+ABOUT LISPEL
+
+ This is Lispel, a (very) small interpreter for a Lisp-like Extension Language.
+ It is aimed at providing plugin scripting support for C++ applications.
+
+ I wrote this interpreter because I wanted to have scripting capabilities
+ for my C++ software written for a wide range of platforms. The fact that
+ this software was among others to support DOS ruled out a number of
+ candidates (normally I would have used Tcl/Tk to add scripting support).
+ So I decided to write a small interpreter from scratch, implementing a 
+ Lisp-like language (more exactly, a Scheme-like language, as what today is
+ known as Lisp is much too bloated).
+
+ Although the Lispel distribution provides a small interactive interpreter
+ Lispel is in no way suitable for writing large scale applications solely on
+ the scripting level. It is, among other deficiencies, much too slow for such
+ a task. On the other hand, if you wanted to build a application based on some
+ library, you could start by providing scripting support for that library and
+ build a prototype using scripts.
+
+
+VERSION AND STATUS
+
+ The current version, Lispel 0.0.3, really should be regarded as some kind of
+ preview. Many things that need to be implemented are still missing and some
+ things found in 'real' Scheme interpreters will never be implemented.
+ Among the missing features from the first category mentioned are:
+ yet. These include:
+
+ - You can't use the quoting character, you will have to use the quote special
+   form explicitly, instead (a bug!).
+ - The scanner doesn't recognize numeric constants with a radix other than 10
+   and character constants.
+ - Dotted pairs aren't supported (this might belong to the second category).
+ - Continuations aren't implemented, they'll need a new evaluator
+   implementation.
+
+ During the next releases the various components making up the interpreter
+ will be gradually enhanced or replaced by improved implementations. For
+ forthcoming additions, refer to the file TODO. But before I will integrate
+ a witty super-compiler, full CORBA scripting support and a nuclear power plant
+ control module I will keep on adding basic data types and builtins. Then the
+ components will be improved bottom up, which basically means that I will start
+ improvements from the scanner class up to the class Interpreter.
+
+
+FEATURES
+
+ Yes, there are also some features. Some of them are:
+
+ - Writing builtins is easier than in most other embeddable scripting 
+   languages. Normally, when implementing a builtin for some scripting language
+   you will first check the number of arguments, then you have to check if each
+   of the arguments has the correct type and then you can write down the code
+   for what you really wanted to do. This approach adds much overhead to each
+   command implementation and can be a source of nasty bugs during development.
+   In Lispel, the type checking is done automatically behind the scenes.
+ - Hash tables aren't required by the Scheme standard, but as I regard them as
+   an important data structure especially for scripting languages they are
+   supported by Lispel.
+ - The code is very simple so that you can have a jump start if you want to
+   add or modify anything. Or you can simply 'steal' some of the components
+   making up Lispel to implement your own scripting language.
+
+
+PLATFORMS
+
+ Lispel has been successfully compiled on DOS, Windows and Linux using
+ egcs 1.1.2 and gcc 2.95.2. Egcs 1.1.2 likes to issue strange warnings about
+ uninitialized variables because of it's poor code flow analysis in presence
+ of exceptions. This problem will probably be worse when using older compiler
+ versions (which I haven't tested). Aside from this, Lispel should be fairly
+ portable as long as you use a compiler that fully supports STL as the sources
+ are written in pure ANSI-C++ (at least I think so).
+
+
+FEATURES / DESIGN
+
+ Not that many features and an evolving design. ;-)
+ 
+
+FUTURE DIRECTIONS
+
+ The items described in the following paragraphs won't be added before the
+ Lispel implementation is stable and complete. 'Stable' and 'complete' are
+ very vague terms which I used intentionally because I am currently unsure
+ about how far Lispel should deviate from mainstream Scheme implementations
+ to be able to fully support new features.
+
+ The first extension package for Lispel will be an XML processing package
+ because this is a part of the project I wrote Lispel for. Other parts of this
+ project will include constraint propagation and neural network computations.
+ The XML processing facility will be based on the GPL'ed Gnome XML library.
+
+ One thing that should be relatively easy to accomplish is the
+ implementation of new syntaxes for Lispel by essetially replacing the reader
+ class. This would allow a user to select a preferred syntax, may it be 
+ lisp-like or Javascript, during interpreter initialization.
+
+
+CODING
+
+ If you would like to contribute some code then please try to stick to the
+ coding conventions explicated below. They lack some details, but you should
+ get an impression of what's going on by skimming over the sources (what you
+ will probably do anyway when you start extending the interpreter).
+
+ * Avoid compiler warnings: the compiler doesn't issue warning because it is
+   afraid of getting bored, so don't ignore them!
+
+ * Use the new typecast constructs, they make your intentions much clearer and
+   thus yield code which more readable for others
+
+ * It is always a good idea to let Emacs indent your code (I personally like
+   my code indented --braces-on-if-line, but don't feel forced into sticking
+   to this style)
+
+ * If you think that there are good reasons to break the coding conventions
+   described above then feel free to do so.
+ 
+ * Prefix member variables with m_ to avoid clashes with parameter and method
+   names. For static member variables the prefix M_ should be used to make
+   clearer that they are another type of member variables.
+
+ * Use dynamic binding and factory classes for components that you expect to
+   be extended or that may be replaced by alternative components. If you
+   build more complex subsystems, provide a common (mid-level) API by 
+   implementing a facade class.
+ 
+ * I try to avoid implicit conversions wherever possible as this makes the 
+   code much easier to understand and hence much safer. Use the explicit 
+   keyword where appropriate and be careful with defining conversion operators.
+
+
+REFERENCES
+
+ There are some web sites dedicated to Scheme which keep many pointers to 
+ introductory material, other Scheme implementations, ...
+ Most of the sites can be found in the Scheme FAQ, available at
+  ftp.cs.cmu.edu:/user/ai/pubs/faqs/scheme/
+ Some sites containing good introductory papers and some sample programs are
+  - www.schemers.org
+  - ftp.cs.indiana.edu:/pub/scheme-repository/
+  - ftp.cs.cmu.edu:/user/ai/lang/scheme/
+  - swiss-ftp.ai.mit.edu:/archive/scheme-reports/
+  - faui80.informatik.uni-erlangen.de/pub/scheme/
+
+ A good reference of the Scheme language is the 'Revised 4th Report on Scheme',
+ often referred to as R4RS, which many features of Lispel are based on. The
+ document LANGUAGE describes the major differences between Scheme and Lispel.
+ Additionally, the sample programs in the directory samples/lispel should
+ give you a first impression of the language's features. The document can be
+ found at
+  ftp://swiss-ftp.ai.mit.edu/pub/scm/HTML/r4rs_toc.html or
+  http://www.maths.tcd.ie/scrg/scheme/index.html
+
+ If you want to hack the interpreter then you best refer to the doc++ generated
+ API documentation. If you have a copy of doc++, then simply go to the doc/api
+ directory and type 'make'. The generated documentation should be available
+ as a separate package from where you obtained the Lispel sources.
+ Additionally, the directory samples/extension contains some simple extensions
+ to the interpreter which can be used as a starting point for your own work.
+
+
+CONTACT
+
+ If you have any comments or suggestions then feel free to send a mail to
+   msaure@rz.uni-osnabrueck.de
+ The Lispel homepage can be found at 
+   http://cmp.cl-ki.uni-osnabrueck.de/~michael/lispel/
+ This might change in the near future as I don't know if I am allowed to 
+ keep this page.
+
+
+Have fun!
+

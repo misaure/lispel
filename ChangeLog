@@ -1,0 +1,475 @@
+
+18-apr-2001	Michael Saure	<MichaelSaure@web.de>
+	* kdeshell/: (added) skeleton implementation of a simple development
+	environment
+
+03-jul-2000	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* tools/vmspec: (added) directory to virtual machine specification
+	parser
+
+01-jul-2000	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* reopened this development branch because significant portions of the
+	0.1.x-branch are lost due to Win95's unique ability to erase all data
+	on a hard disk
+	* tools/lDoc: (added) lDoc autodoc utility from 0.1.x-branch; lDoc is
+	a slightly modified version of KDE's kdoc
+
+22-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* defs: (bugfix) LispelAssert threw wrong exception type
+	* !! branched development for 0.1.0 release
+
+21-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lispelvm, evaluator: (changed) moved IterativeEvaluator from
+	  evaluator to lispelvm as it heavily depends on the VM data structures
+	* vmdriver: (added) command line driver for VM code interpreter
+	* vminterp: (bugfix) fixed some errors after initial testing
+	* lispelvm: (added) ActivationStack
+	  (changed) use ActivationStack in IterativeEvaluator,
+	  CompilingEvaluator and LispelVM
+	* lexer: (bugfix) fixed a lexer bug which prevented proper reading of
+	  character constants
+	* reader: (bugfix) fixed bug 010
+	* tests/xlateChar: (added) test for translateCharacter function
+	* miscclass/File.cc: (renamed) to File-unix.cc
+	  (added) File::remove, File::rename
+	* miscclass/SharedLibrary-dl.cc: (added) UN*X dl-interface
+	* tests/: (bugfix) made the test programs work again (some of them 
+	  didn't reflect some API changes
+
+20-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lispelvm, vminterp: (bugfix) fixed some stupid typos I added
+	  yesterday which prevented compilation
+
+19-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* environment: (added) Environment::clear
+	* token: (added) Token::hasType
+	* vminterp: (added) beginnings of an interpreter for (textual) virtual
+	  machine instructions
+	* miscclass/SharedLibrary: (added) class for system independant access
+	  to shared libraries loaded at run-time.
+	* miscclass/File-win32: (added) beginnings of a file class for Win32
+	* defs: (changed) assert_valid_insatance() throws exception if test
+	  fails
+
+18-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* samples/ (added) started gathering some sample programs, e.g. 
+	  the gensym implementation from the tutorial on embedding Lispel
+	  + some Scheme programs written for various other interpreters (this
+	  will allow to check for compatibility)
+	* astree: (removed) 
+
+17-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* miscclass: (added) linked in some classes from MiscClasses which
+	  might be useful for Lispel. 
+
+15-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* (changed) replaced all occurences of return ...; /***notreached***/
+	  with macro UNREACHABLE
+	* reader: (added) Reader::ReadException
+	  (bugfix) fixed quoting character bug (bug 002)
+	* lexer: (added) support for quoting character
+
+03-dec-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* reader: (changed) renamed Reader to SimpleReader; Reader now is
+	  an abstract interface for readers
+
+29-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lispelvm: (changed) class interface to be prepared for extended 
+	  command set
+	  (added) some more code
+
+28-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* jslex: (added) copy of lexer.cc to branch development for JavaScript
+	  syntax support
+	* astree: (added) abstract syntax tree interface which will be used as
+	  an intermediate language between reader and evaluator/compiler
+
+24-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (added) #! as a special token to allow running Lispel as a
+	  script interpreter on UN*X systems
+	  (added) translateCharacter implementation
+	* userinterface: (added) BatchExecInterface
+	* interpreter: (changed) Interpreter::repl uses UserInterface passed as arg
+	* nodefactory: (added) create character cells in nodeFromToken
+	* driver: (added) option for sourcing files
+
+22-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+        * utilities: (added) isCompleteExpression
+	* lexer: (changed) minor rework of scanner code; should be somewhat
+	  faster now [incomplete]
+	  (added) LexBuffer::size()
+	* interpreter: (added) Interpreter::instance()
+
+21-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* exception: (changed) use ostrstream instead of sprintf
+	* trace: (added) linked in from MiscClass class library
+	* TAG: v0_0_2
+
+19-nov-1999	Michael Saure	<msaure|rz.uni-osnabrueck.de>
+	* nodes: (added) STL-compatible iterator interface for Hashtable and
+	  SetValue
+	* hashcmd: (added) `hash-keys', `hash-values'
+	* corecmd: (added) `let', `let*'
+	  (changed) moved definitions of empty constructors and destructors
+	  to header file to make sources shorter
+	* reader: (bugfix) printList: throw TypeException instead of string
+	  (bugfix) printList: spaces separating list elements were always
+	  printed to standard output
+	* evaluator, corecmd: (changed) representation of a closure's body to
+	  a list of expressions to be evaluated, thus allowing `begin'-like
+	  behaviour
+
+18-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* tests/: (changed) make test programs compile with new library code
+	* reader: (bugfix) fixed vector bug (bug 007)
+	* nodes: (bugfix) cleaned up printing of vectors
+	* listcmd: (added) 'set-car!' and 'set-cdr!' builtins;
+	  (changed) throw ArgumentCountExceptions
+	* mathcmd: (changed) throw ArgumentCountException
+	* corecmd: (added) 'cond', 'load', 'time'
+	* interpreter: (added) Interpreter::source for loading programs
+	* exception: (changed) ArgumentCountException now produces more 
+	  detailed messages
+	* driver: (added) global Lispel variable 'commandline-arguments'
+
+17-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* iterator: (added) interface declarations for iterator hierarchy
+	* nodes: (added) interface for retrieving iterator from NodeValue
+	  based data type implementations.
+	  (added) hashtable type implementation (based on STL map class)
+	  (added) set type (based on STL set class)
+	* nodefactory: (added) creation and handling of hashtables, sets,
+	  keywords
+	* lexer: (added) table of default character names
+	  (added) keywords
+	* hashcmd: (added) commands for handling hashtables
+	* corecmd: (added) builtins `hashtable?', 'keyword?' and 'set?'
+	* LANGUAGE.html: (added) started documentation of data types
+	  (added) start doc of hashtable builtins
+	* interpreter: (changed) made Interpreter::repl more fail-safe by
+	  catching RecoverableExceptions
+	* defs: (added) macro LispelAssert
+	* setcmd: (added) implementation of set-related builtins [incomplete]
+
+16-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* exception: (added) more detailed exception hierarchy
+	  (changed) exception names now match coding conventions
+	* nodes, evaluator, nodefactory: (changed) use new exceptions and
+	  (added) throw declarations for all methods throwing exceptions
+	* driver, interpreter, corecmd: (changed) use new excceptions
+	* defs: (added) macro UNREACHED for marking unreachable function exits
+	STATUS: error handling is getting better now, but still far from being 
+	satisfactory
+
+15-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* corecmd: (added) 'begin'
+	  (changed) replaced many class based command implementations by 
+	  implementations based on plain functions
+	* version.h.in: (renamed) LSCRIPT_VERSION to LISPEL_VERSION
+	* interpreter: (added) addBuiltin for commands implemented as plain
+	  functions
+	* lexer: (added) scanner now recognizes relational operators; digits,
+	  operator characters and relop characters are declared as possible
+	  parts of an identifier
+	  (added) simple floating point numbers are recognized now
+	* TAG: v0_0_1; yes: the first version of Lispel!
+
+14-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (removed) Unused Handle constructors;
+	  finished new closure implementation, heap memory usage has been cut
+	  down by more than 15%
+	* nodefactory: (changed) applied changes for new closure representation
+	* TAG: v0_0_1_pre1
+
+13-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes:
+	  nodefactory: (changed) started NodeValue-based implementation of
+	  closures to cut down the size of the heap's memory usage
+	* environment: (added) mechanism to dispose of unused environments
+	  [untested]
+
+12-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* worked on integrating garbage collector prototype.
+	* corecmd: (added) 'memstat' and 'gc'
+	* reader: (changed) Reader::dbgPrint only produces output if macro 
+	  DEBUG>3 at compile time
+	  (changed) beautified printList output
+	* nodefactory: (removed) safePoint, not needed anymore
+	* nodes: (bugfix) Handle::incRef tried to dereference c[ad]r of nil
+	  nodes.
+
+11-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* LANGUAGE.html: (removed) moved to doc
+	* doc: (added) INTERPRETER.html and index.html, documentation stubs
+	  (removed) moved doc++ -generated API docs to doc/dir
+	* gc: (added) sketch of an interface for garbage collectors
+	* nodefactory: (added) STL compatible iterator interface in preparation
+	  for garbage collection
+	  (added) recycleUntagged() and activeEnvironments() to support
+	  garbage collection.
+	* nodes: (changed) VectorValue now keeps a vector of Handle*
+	  (added) STL compatible iterator interface for VectorValue
+
+11-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* evaluator: (added) code for applying closures
+	  (added) pushEnvironment( Environment*)
+	* nodes: (added) Handle::body() and Handle::bindArguments to support
+	  application of closures
+	* corecmd: (added) 'exit'
+	* userinterface: (added) class for abstracting away from interaction
+	  with user in an interactive interpreter
+	* driver: (added) started implenting a simple interactive interpreter
+	* STATUS: closures work
+
+10-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* utilities: (bugfix) copyList ran beyond end of list
+	* nodefactory: (added) makeClosure
+	* corecmd: (added) finished lambda implementation
+	* nodes: (added) printing of closures (operator<<( ostream,Handle_ptr))
+
+09-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* evaluator: (added) environment stack implemented in base class
+	  Evaluator; this is needed for nested (lexical) scopes
+	* utilities: (added) copyList, copies a (flat) consed list into an
+	  STL container using any kind of insert iterator.
+	* corecmd: (added) 'lambda' special form [unfinished]
+
+05-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* environment: (bugfix) incomplete implementation of exists;
+	  (changed) iterative implementation of lookups;
+	  (changed) lookup now returns Environment::value_type instead of
+	  references to this type
+	* exception: (bugfix) fixed bug 004 which was caused by invalid 
+	  accesses to instance variables in the output operator for
+	  lispel_exception (cf. BUGS)
+	  (changed) virtual inheritance used for all methods.
+	  (added) printToStream method to support virtual inheritance
+	* LANGUAGE: (renamed) converted to HTML, now available as
+	  LANGUAGE.html;
+	  (added) list of commands currently available.
+	* nodefactory: (added) untagNonEmpty in preparation for interaction
+	  with garbage collectors.
+	  (bugfix) nodeFromToken produced a new boolean node on each call
+	* listcmd: (added) implementations for Lispel 'list' and 'length'
+	  functions
+	* corecmd: (added) 'not', 'and'
+	* mathcmd: (added) some basic math functions (=, <, >, +, -, *, /)
+	* lexer: (added) class StringBucket to add support for keeping unique
+	  instances of symbol values.
+
+04-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* corecmd: (added) if, define, cons
+	  (added) class TypePredicate +  type predicate defined in R4RS except
+	  number?, which has been split into integer? and double?
+	* nodefactory: (added) makeCons( Handle_ptr, Handle_ptr)
+	* nodes: (added) BinaryPredicateAdapter which can be used to make
+	  function Handle_ptr x Handle_ptr --> bool available to the 
+	  interpreter.
+
+03-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* tests/ (added) a few test cases which reveal some bugs (most bugs are
+	  due to incomplete error handling throughout the whole interpreter)
+	* nodes: (added) wrapper class (adapter) for implementing builtins as
+	  plain functions.
+	  (added) const accessor functions for car and cdr fields
+	* evaluator: (bugfix) the evaluator crashed when trying to evaluate
+	  empty lists as expressions
+	* lexer: (added) a hook for manipulating symbols before they are 
+	  passed to the caller
+	  (added) the output operator for Token now uses printList
+	* reader: (changed) removed Context argument for printList; changed
+	  first param from Handle_ptr to const Handle*
+	* corecmd: (added) eq? and eqv?
+
+02-nov-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* reverted to last tagged revision ('hello_world_runs') since the 
+	  changes made in the last two days completely broke the code.
+	* context: (added) structure for passing around commonly needed 
+	  components of the interpreter; structures of type Context are used 
+	  in virtually any component
+	* corecmd: (added) 'quote' special form
+	* nodes: (changed) a memory cell's type tag is now represented as a
+	  enumeration value (Handle::NodeType); 
+	  (renamed) the type tag constants have been prefixed with nt
+	  (changed) node flags are stored separately from type tags
+	  (added) safe accessor functions to the data stored in a memory cell
+	* utilities: (added) general utility functions; currently these are
+	  makeList, eq and eqv
+	* reader: (removed) stlvect2List and stllist2List in favour of the more
+	  general makeList function
+
+29-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (bugfix) symbols aren't printed as quoted string any longer
+	* evaluator: (bugfix) fixed a (very, very) stupid bug in the evaluator;
+	  STATUS: "hello, world" works!
+
+28-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodefactory: (added) method for freeing nodes
+	  (added) method for signalling safe points for garbage collection
+	* exception: (added) base class for Lispel exceptions
+	* nodes: (bugfix) printing of Handle_ptr was handled incorrectly for
+	  avectors and closures
+	  (added) common base class for BuiltinValue and SpecialValue which
+	  enables keeping track of a function's name
+
+27-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* interpreter: (added) still trying to tie together the loose ends by
+	  filling the interpreter's high-level API
+	* nodes: (added) SpecialValue, a base class for special forms
+	  (added) Handle::setFlag( nodetype)
+	  (added) missing tag definitions
+	* corecmd: (added) decls for core interpreter commands + some impls
+	* evaluator: (added) evaluation of builtin special forms
+	* all: (added) more assertions in various places
+
+26-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* general work on the SimpleEvaluator, which lead to some additions
+	  and bugfixes in various files
+	* interpreter: (added) this is a facade for all the modules making up
+	  a complete interpreter. MISSING: a factory for all elements the
+	  interpreter is made of
+	* builtin: (added) stubs for the basic Lispel primitives.
+	* README: (added) references to documentation and introductory material
+	* LANGUAGE: (added) place-holder for a Lispel language reference
+	* examples: (added) a place where to store sample programs
+	* nodes: (added) BuiltinValue, a base class for user defined functions
+	  implemented in C++.
+
+24-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (bugfix) renamed PortValue's method getc to get because on some
+	  systems this causes problems when <cstdio> is included before
+	  nodes.hh (getc often is defined as a macro)
+	  (added) preparing for user-defined types
+	* evaluator: (added) stubs for a simple evaluator
+
+23-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (bugfix) invalid flag for arrays
+	  (added) preparing for immediate number vectors (arithmetic vector)
+	* reader: (added) prepared for efficient handling of number vectors
+
+22-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (removed) IntegerValue, BooleanValue, CharValue, DoubleValue
+	* reader:
+	  (added) conversion from STL list<Handle_ptr> and vector<Handle_ptr>
+	  to Scheme lists
+	  (added) simple list printing function (lacks pretty printing)
+	  (bugfixes) many; the reader correctly reads in programs, but some
+	  [works]
+	  bug makes it crash on EOF; it's late, will fix it tommorrow
+	* nodefactory: (bugfixes) ironed out many, many bugs and added more
+	  assertions [all tests ok]
+	* defs.hh: (added) placeholder helper macros
+
+20-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (added) STL compliant helper functions
+	  (bugfixes) some errors were left in the code after adding support
+	  for immediate values
+	* reader: (added) impl. for readVector
+	* nodefactory: (added) missing cases for nodeFromToken
+	* lexer: (changed) simplified scanner code;
+	  (added) unget() method to LexBuffer
+	
+19-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (added) type check methods for Handle
+	  (added) accessor methods; using this methods establishes automatic
+	  type checking and allows later optimizations by moving data from
+	  *Value classes to Handle.
+	  (added) double and integer values can now be stored immediately
+
+18-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodefactory: (added) missing code, should be complete now
+	  (changed) use NodeValue::printToStream to display nodes
+	* nodes: (added) print method for NodeValue and descendants;
+	* reader: (bugfix/change) reworked the inner workings which lead to a
+	  at least partially functional reader implementation
+
+18-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (changed) Completely reorganized the sources:
+	  the scanner is now implemented in the Token class input operator so
+	  that neither indirect istream accesses (by ScannerSource instances)
+	  no explicit instantiations of scanners are needed
+	  (changed) minor performance improvement in LexBuffer + added buffer
+	  overflow checks (as assertions, for now)
+	  (added) reset() method to allow reuse of LexBuffer instances
+	  (added) token type definitions moved from tokenvals to
+	  Token::TokenType
+	  (removed) ScannerSource
+	* README: (added) some coding conventions; LispScript has been renamed
+	  to Lispel (Lisp-like Extension Language), thanks to Sabine Laws
+	* tokenvals: (removed) all definitions in this file have been moved to
+	  lexer
+	* nodefactory:
+	  reader: (changed) made changes for new scanner implementation
+	* test programs: (changed) made changes for new scanner implementation,
+	  some (cat.cc, scannersource.cc) removed
+	* STATUS: doesn't work, but sources have been considerably cut down
+	  in size!
+
+17-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (added) better error handling, instead of throwing exceptions
+	  an error token will be returned.
+	  (added) the Scanner is now able to handle operator characters (+-*/)
+	  (bugfix) tried to fix a bug in recognizing numbers but still doesn't
+	  work (core dump)
+
+13-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (added) better string handling (backslash subst);
+	  (bugfix) more reliable error and EOF checking [checked]
+	* tokenvals: (bugfix) fixed a bug in the debug output routine [checked]
+	* reader: (bugfix) although the reader is still messy it seems to work
+	  at least for simple programs; vector aren't supported
+	  [incomplete,works]
+	* environment: (added) beginnings of a display method (I am not sure
+	  if it really belongs here...); this method helped revealing some
+	  problems with node allocation by the reader (needs to be fixed REALLY
+	  SOON) [incomplete]
+
+12-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (added) value types IntegerValue, DoubleValue;
+	  (added) set methods for ConsValue
+	* nodefactory: (added) some code which can serve as a basis for a
+	  first implementation of the reader [incomplete,works]
+	* pointer.hh: (added) automatic pointer variables used to enhance CORBA
+	  compatibility
+	  (bugfix) used undefined variable (the compiler only realizes that
+	  when the template is first instantiated)
+	* LispScript.idl: (added) I track the development of classes in terms
+	  of IDL declarations to keep track of the level of CORBA
+	  compatibility.
+	* nodefactory: (changed) removed program structure reconstruction
+	  (moved to reader)
+	* reader: (added) some more code, but still [incomplete]
+	  The reader will need some substantial rework, but at least it 
+	  will soon be able to process some test programs
+	* environment: (added) method to spawn child environments
+	* reader0: (added) test program for the reader (revealed some serious
+	  bugs)
+	  
+11-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* nodes: (added) refcount methods for NodeValues; make class Handle
+	  use refcount methods [complete,untested]
+	* environment: (added) a simple implementation of environments (as
+	  template class) [complete,preliminary]
+	* nodes: (added) more *Values; ConsValue, CharValue, PortValue,
+	  BooleanValue [complete,preliminary]
+	* reader: (added) preliminary (RDP-based) reader implementation
+	  [incomplete,untested]
+	* nodefactory: (added) sketch of an interface for the NodeFactory used
+	  to create memory cells from scanner tokens [incomplete]
+
+08-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (bugfix) lexer correctly recognizes strings
+	* doc: (added) directory and makefile for generating doc++ API docs 
+	* lexer: (added) autodoc comments to lexer module
+	* nodes: (added) preliminary implementation of Lisp's tagged memory
+	  cells
+
+07-oct-1999	Michael Saure	<msaure@rz.uni-osnabrueck.de>
+	* lexer: (added) started gathering code for the lexical scanner; the
+	  very basics (except strings) are working. This should be enough for
+	  implementing a working reader. [incomplete]
+	* (added) the autoconf scripts [incomplete]
+	* tests: (added) some test programs for what is already there
+
+$Id: ChangeLog,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
+

@@ -1,0 +1,43 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:726: checking for a BSD compatible install
+configure:779: checking whether build environment is sane
+configure:836: checking whether make sets ${MAKE}
+configure:882: checking for working aclocal
+configure:895: checking for working autoconf
+configure:908: checking for working automake
+configure:921: checking for working autoheader
+configure:934: checking for working makeinfo
+configure:973: checking for gcc
+configure:1086: checking whether the C compiler (gcc  ) works
+configure:1102: gcc -o conftest    conftest.c  1>&5
+configure:1128: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:1133: checking whether we are using GNU C
+configure:1142: gcc -E conftest.c
+configure:1161: checking whether gcc accepts -g
+configure:1194: checking for strerror in -lcposix
+configure:1213: gcc -o conftest -g -O2   conftest.c -lcposix   1>&5
+/usr/bin/ld: cannot find -lcposix
+configure: failed program was:
+#line 1202 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char strerror();
+
+int main() {
+strerror()
+; return 0; }
+configure:1239: checking for gcc option to accept ANSI C
+configure:1292: gcc  -c -g -O2  conftest.c 1>&5
+configure:1316: checking how to run the C preprocessor
+configure:1337: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1400: checking for c++
+configure:1432: checking whether the C++ compiler (c++  ) works
+configure:1448: c++ -o conftest    conftest.C  1>&5
+configure:1474: checking whether the C++ compiler (c++  ) is a cross-compiler
+configure:1479: checking whether we are using GNU C++
+configure:1488: c++ -E conftest.C
+configure:1507: checking whether c++ accepts -g

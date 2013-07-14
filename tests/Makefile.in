@@ -1,0 +1,20 @@
+CC		= @CC@
+CXX		= @CXX@
+CFLAGS		= @CFLAGS@
+CXXFLAGS	= @CXXFLAGS@
+
+RM		= rm -f
+
+EXEEXT		= @EXEEXT@
+
+testprogs	= chartypes$(EXEEXT)
+
+all:		$(testprogs)
+
+.cc.o:
+	$(CXX) $(CXXFLAGS) -c $<
+
+
+chartypes$(EXEEXT):	chartypes.o
+	$(CXX) -o chartypes$(EXEEXT) chartypes.o
+

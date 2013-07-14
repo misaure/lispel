@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<TITLE>KDOC -- C++ documentation extraction tool</TITLE>
+	<META NAME="GENERATOR"	CONTENT="ViM 5">
+	<META NAME="Author"	CONTENT="Sirtaj Singh Kang">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+
+<H1>KDOC -- C++ Class Documentation Tool</H1>
+<address>Sirtaj S. Kang (taj@kde.org), Torben Weis (weis@kde.org)</address>
+<p>Copyright (c) 1997</p>
+<p>
+(This package includes a modified version of Sriram Srinivasan's perl
+AST module)
+</p><p>
+
+Distributed under the GNU Public License
+</p><p>
+
+KDOC is a C++ class documentation extraction tool, initially written for
+the specific purpose of generating documentation for the KDE libraries.
+</p><p>
+
+KDOC extracts specially formatted documentation and information about
+your classes from the class' header files, and generates cross-referenced
+HTML, LaTeX or man pages from it.
+</p><p>
+
+KDOC allows groups of classes to be formed into "libraries" and
+documentation from separate libraries can be very easily cross-referenced.
+</p><p>
+
+For a sample of KDOC's HTML output, see
+<A HREF="http://www.ph.unimelb.edu.au/~ssk
+kde/srcdoc/kdeui/heir.html">http://www.ph.unimelb.edu.au/~ssk/kde/srcdoc/kdeui/heir.html</A>
+</p>
+
+<h2>Features</h2>
+<p>
+<UL>
+<LI>Generates HTML and LaTeX output.  </LI>
+<LI>Cross-reference classes in separate libraries.</LI>
+<LI>Supports Qt signals and slots.</LI>
+<LI>Written in perl and easily extensible.</LI>
+</UL>
+</p><p>
+
+</p>
+
+<h2>Why didn't we use cocoon or DOC++?</h2>
+<p>
+
+<UL>
+<LI>DOC++ crashed on many of our valid headers. We sent bug reports but
+   got no reply.</LI>
+<LI>Cross-referencing to external libraries was important.</LI>
+<LI>We needed support for Qt's signals and slots.</LI>
+<LI>Both packages generated documentation with too much extraneous fluff.</LI>
+</UL>
+</p><p>
+
+</p><p>
+
+</p><p>
+
+</p><p>
+
+</p>
+
+<h2>Writing the source documentation</h2>
+<p>
+
+The format for the comments is very similar to that of the javadoc
+package, which is a part of the Java Development Kit.
+</p><p>
+
+In general, a doc comment is a C comment that immediately precedes a
+class, method, constant or property declaration. It takes the form:
+</p>
+
+<hr>
+<pre>
+/**
+* Documentation goes here
+*/
+class KMyClass {
+	...
+</pre>
+<hr>
+<p>
+
+Note the double asterisk at the start of the comment. This is what
+differentiates a doc comment from a normal comment.
+</p><p>
+
+Preceding asterisks on each line are ignored.
+</p><p>
+
+The documentation is a mixture of:
+</p>
+
+<UL>
+<LI>Normal text. Paragraphs must be separated by atleast one blank line.</LI>
+
+<LI>text of the form
+<hr>
+<pre>
+&lt;pre&gt;
+.....code fragments....
+&lt;/pre&gt;
+</pre><hr></LI>
+
+<LI>Various tags of the form:
+</p><p>
+
+<code>@tagname [tag parameters]</code></LI>
+</UL>
+
+<p>The valid tags for each type of source code entity are:</p>
+
+<UL>
+<li><h3>Classes</h3>
+
+<dl><dt><code>@short [one sentence of text]</code>
+<dd>
+	A short description of the class
+<dt>
+<code>@author [one sentence of text]</code>
+<dd>	
+	Class author
+<dt>
+<code>@version [once sentence of text]</code>
+<dd>
+	Class version (I normally set this to the RCS/CVS tag "Id")
+
+<dt>
+<code>@see [one or more references to classes or methods]</code>
+<dd>
+	References to other related documentation.
+</dl>
+</LI>
+<li>
+<h3>Methods</h3>
+<dl>
+<dt>
+<code>@see</code>
+<dd>
+	as above
+<dt>
+<code>@return	[one sentence]</code>
+<dd>
+	A sentence describing the return value
+<dt>
+<code>@param	[param name identifier]	[param description]</code>
+<dd>
+	Describe a parameter. The param description can span multiple
+	lines and will be terminated by a blank line, the end of the
+	comment, or another param entry. For this reason, param entries
+	should normally be the last part of the doc comment.
+</dl>
+</li>
+<li>
+<h3>Constants, Enums, Properties</h3>
+
+<dl>
+<dt>
+<code>@see</code>
+<dd>
+	as above
+</dl>
+</LI>
+<LI>
+<h3>ALSO <code>@ref</code></h3>
+
+As a departure from the javadoc format, the metatag "<code>@ref</code>"
+has the same format as <code>@see</code>, but can appear anywhere in
+the documentation (all other tags must appear on a line by themselves).
+</li>
+</ul>
+
+<h2>Examples of doc comments</h2>
+<p>
+
+See the file example.h. This is the same 
+<A HREF="http://www.ph.unimelb.edu.au/~ssk/kde/devel/proguide.html#jdoc">example</A> I have up on the KDE Developers' Centre.
+</p>
+
+<p>
+Other sources of examples:
+</p>
+
+<UL>
+<li>The KDE core and ui library headers now contain lots of 
+<A HREF="http://www.ph.unimelb.edu.au/~ssk/kde/devel/#srcdoc">documentation</A>.
+</li>
+
+<li>The definitive 
+<A HREF="http://java.sun.com/products/jdk/javadoc/writingdoccomments.html">reference for javadoc comments</A> at Sun.</li>
+</UL>
+
+<h2>Generating the documentation</h2>
+<p>
+
+When you process a set of C++ headers with KDOC it creates 
+</p>
+<ul>
+<li>A set of HTML files (two index files and one for each class) and/or </li>
+<li>A LaTeX file (containing all docs for the classes) and </li>
+<li>A file with a .kdoc extension, which can be used to reference classes
+and members of this library from other libraries.</li>
+</ul>
+<p>
+You need a place to put the kdoc files and to search for them if you
+are cross-referencing from another library. You can specify this with
+the -L flag. 
+</p><p>
+
+The default is the current directory, or $KDOCLIBS if it is set.
+</p><p>
+
+NOTE:	The included qt2kdoc program can generate qt.kdoc from the
+	classes.html file that comes with Qt's documentation.
+</p>
+<h2>Example:</h2>
+<p>
+
+The headers "*.h" in the directory <code>~/baseline/kdelibs/kdecore</code>
+make up a library called kdecore. I wish to generate HTML documentation
+for this library and store in in $HOME/web/kdecore, which can be accessed
+by the URL
+</p><p>
+
+	<address>http://www/~ssk/kdecore/</address>
+</p><p>
+I also want to include references to the Qt toolkit, for which I have
+a <code>qt.kdoc</code> file.
+</p><p>
+<hr>
+<pre>
+cd ~/baseline/kdelibs/kdecore
+kdoc -H -d $HOME/web/kdecore -u "http://www/~ssk/kdecore/" kdecore *.h -lqt
+</pre>
+<hr>
+</p><p>
+
+That's all there is to it. kdoc will create up to one level of
+missing directories in the output path (ie it would have created
+"<code>$HOME/web/kdecore/</code>" if "<code>$HOME/web/</code>" existed).
+</p><p>
+
+See <code>kdoc -h</code> for a synopsis of kdoc's options. Please
+forgive this haphazard documentation. I am in the (slow, painful)
+process of writing an extended manual, but wanted to get this package
+out quickly. Expect lots of updates.
+</p><p>
+<hr>
+<address>Sirtaj S. Kang (taj@.kde.org), Tue Dec 16 14:32:15 EST 1997.</address>
+</p>
+</BODY>
+</HTML>

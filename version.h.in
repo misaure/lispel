@@ -1,0 +1,6 @@
+#ifndef _lispel_VERSION_H_
+#define _lispel_VERSION_H_ 1
+
+#define LISPEL_VERSION "@FULL_VERSION@"
+
+#endif /*_lispel_VERSION_H_*/

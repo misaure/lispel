@@ -1,0 +1,57 @@
+Known bugs:
+
+013 the interpreter seems to have some serious problems with undefined
+    character constants.
+
+012 lambda throws an unrecoverable exception when an empty argument list is
+    encountered
+    test: test7.scm
+
+011 the set implementation doesn't work because there is currently no adequate
+    comparison operator for instantiating the STL set class used as an
+    implementation base.
+
+010 there seems to be some kind of problem with EOF characters when sourcing
+    files using the sample shells --file option.
+    test: simply press CTRL-D while in the Lispel shell.   [fixed, 21-dec-1999]
+
+009 hash-keys always returns a list of quoted string, disregarding the fact that
+    keywords or symbols might have been used as keys
+
+008 set-car! and set-cdr! expose strange behaviour
+    test: list0.scm					   [fixed, 18-nov-1999]
+
+007 it seems as if vector constants weren't read correctly; they don't seem to
+    be treated as a single object			   [fixed, 18-nov-1999]
+
+006 the lexer doesn't work correctly on string containing (backslash quoted)
+    strings.
+    test: scanner0 string2.tst
+    workaround: none; lexer module needs some optimizations which will include
+    a fix for this; as long as no other bugs are detected in the lexer, this
+    fix/optimization will be delayed.			   [fixed, 28-nov-1999]
+
+005 the SimpleGC garbage collector implementation always reports
+    "0 cells freed". This might be worth some investigation ;-)
+    							   [fixed, 12-nov-1999]
+
+004 evaluating undefined symbols leads to a crash
+    the crash is caused by throwing an exception when unbound symbols are
+    encountered                                            [fixed, 05-nov-1999]
+
+003 self-evaluating symbols produce crashes when evaluated on their own or as
+    function names.
+    test: interp0 test6.scm				   [fixed, 04-nov-1999]
+
+002 the quoting character doesn't quite work
+    the reason for this behaviour is known, but a fix will require some
+    redesign, so it will be delayed until the next design iteration
+    test: interp0 test5.scm
+    workaround: use (quote ...) instead			   [fixed, 15-dec-1999]
+    note: no 'redesign' needed :-)
+
+001  the evaluator crashes on null-length expressions (aka (), aka nil)
+     test: interp0 empty.scm                               [fixed, 03-nov-1999]
+
+$Id: BUGS,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
+

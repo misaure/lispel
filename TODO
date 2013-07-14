@@ -1,0 +1,154 @@
+LispScript TODO list
+====================
+
+The following list should give you a short overview of what is missing from 
+this interpreter to make it a real Scheme implementation. Each item is
+followed by a number indicating how much work is needed to fix that 
+particular item. A zero tells you that an item has been fixed, the maximum
+value of nine tells you that nothing has been done about the problem in
+question. The | character marks lines which have changed since the last
+release. 
+
+general
+
+  Design and and efficiency always lend themselves to a wealth of improvements.
+
+  Wrap the code into a common namespace. [9]
+
+  Too many classes have very stupid and misleading names. This should be
+  changed before any version of Lispel is released to the public. [9]
+
+| It would be nice to add support for zlib to allow for encrypted script files.
+  [9]
+
+test programs
+
+  Write more tests for the classes making up the scanner. Under normal
+  circumstances I will try to write small test programs as soon as I
+  implemented new functionalities. [5]
+  
+  Automatic testing in the fashion of Greg should be easy to implement and
+  it should make testing much easier. [9]
+
+  I need some R4RS compliance tests. [1] (found one in the CMU AI Repository!)
+
+  Besides programs for testing code units there should also be some sample
+  programs which would mostly be cleaned up versions of the test programs. [9]
+
+
+lexical scanner (lexer.*)
+
+  The scanner only provides the most basic functionality needed to get a first
+  version of the interpreter running. Many things (floating point numbers,
+  backslash substitution in string, ...) are missing and will be implemented
+  as soon as the interpreters core is at least partially implemented. [4]
+
+  The scanner exposes very bad behaviour on incorrect source files. [3]
+
+  Memory consumption can be reduced by using atom tables where equal strings
+  are stored only once. This should reduce both memory consumption and 
+  possible runtime overheads produced by dynamic memory allocation. [6]
+
+  Character constants aren't implemented, there is only a hook in the
+  current implementation. [2]
+
+  The scanner operates on C++ iostreams. It should be modified to operate on
+  Lispel port objects (which *can* be wrappers for iostreams). This is needed
+  for embedding the scanner in a Scheme compliant 'read' function.
+| It should be sufficient to stick to iostreams, since they can operate on
+| files, strings and (with GNU-C++) on pipes. There also exist extensions for
+| zlib compressed files. [9]
+
+
+memory cells and memory management (nodes.*)
+
+  The current implementation of memory cells and memory management heavily
+  relies on dynamic memory allocation which imposes a great runtime overhead
+  on this subsystem. One solution which is to be implemented soon is the use
+  of object caches. This can later be complemented by using the flyweight
+  pattern (where applicable). I hope that the combination of these two will
+  yield an acceptable performance. [7]
+  (this has partially been solved by using immediate values and 'hidden' types
+  like arithmetic vectors which store a sequence of double values immediately)
+
+  There needs to be a way to automatically transform immediately stored vectors
+  of double values back to 'normal' Scheme vectors when elements other than
+  doubles are inserted. [9]
+
+  Handle_ptr needs to be implemented as a proxy class handling reference
+  counting automatically. [9] (cf. memory management)
+
+  Some tests showed that the memory usage of the heap allocated memory cells
+  can be cut down to less that 70% without losing any information or requiring
+  additional computations. Changing the memory cell structure is scheduled for
+  version 0.1.0 as I don't want to start optimizing before the design is
+  carved out. [9] 
+
+  In the current implementation of Handle and NodeFactory it is not possible
+  to cut down heap size (after automatic growth) because cells are not
+  movable. This would require indirect referencing of memory cells. (This is
+  where the class Handle got it's name from: it was intended to act as a
+  reference to memory cell pointers). [9]
+
+
+environments (environment.*)
+
+  The preliminary implementation is based on the STL map container, which in
+  turn is based on red-black trees. Lookups might be sped up by employing a
+  hash container (at least this is what the theoretic computer scientist
+  says). As I am exclusively using egcs I can´t make any guesses about the
+  availability of the STL hash_map class on other compilers. So I might have
+  to write my own (portable) version of a hash map, but I am always having
+  a hard time finding GOOD hashing functions. 
+  NOTE: for local environments, which are expected to be very small in the
+  average case, even a linear search might suffice. [9]
+
+  Unneeded instances of environment aren't disposed because they are not
+  allocated on the heap for efficiency reasons. [2]
+
+
+reader (reader.*)
+
+  First, make it work with different types of NodeFactories and Scanners. [9]
+
+
+Builtins
+
+ Many builtins defined in Scheme R4RS are missing. I think I will define
+ separate packages for core commands, math commands, IO commands, ... to
+ support the assembly of 'personalized' command sets. [7]
+
+ There needs to be some kind of user interface abstraction which acts as a
+ controller for output of program responses and error messages. [8]
+ (the class UserInterface is a preliminary sketch of such an interface)
+
+
+Documentation
+
+ To make the interpreter really usable to others there should be at least a
+ few example programs and a list of differences to standard Scheme
+ implementations. [8]
+
+ Extending the interpreter will require more than just the automatically 
+ generated API docs. [8]
+
+
+User defined types
+
+ User defined types will require
+ - a global registry [9]
+ - a common (class) interface for memory handling, conversions, ... [7]
+ - the possibility to read and print new types; this basically needs an 
+   extension to both the lexer and the reader to recognize user defined type
+   specifications [9]
+
+
+Language features
+
+ Continuations are currently not supported. [9]
+
+ Many functions defined in R4RS aren't implemented. [8]
+
+
+$Id: TODO,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
+

@@ -1,0 +1,80 @@
+# a simple Makefile for systems which aren´t able to run the
+# autoconfiguration scripts
+
+MCHOME		= /home/michael/src/mystuff/miscclass
+
+CC		= gcc
+CXX		= c++
+ifeq ($(debug),yes)
+  DEFS		= -DHAVE_CONFIG_H -DDEBUG=4
+  CXXFLAGS	= -g -Wall -pipe -I.. $(DEFS) -I$(MCHOME)
+  CFLAGS	= -g -Wall -pipe -I.. $(DEFS) -I$(MCHOME)
+else
+  DEFS		= -DHAVE_CONFIG_H -UDEBUG
+  CXXFLAGS	= -Wall -pipe -I.. -O2 $(DEFS) -I$(MCHOME)
+  CFLAGS	= -Wall -pipe -I.. -O2 $(DEFS) -I$(MCHOME)
+endif
+LDFLAGS		= -L. -L$(MCHOME)/miscclass
+
+RM		= rm -f
+
+c_src		= 
+cxx_src		= lexer.cpp nodes.cpp environment.cpp nodefactory.cpp reader.cpp \
+		  evaluator.cpp interpreter.cpp corecmd.cpp lispelvm.cpp        \
+		  exception.cpp utilities.cpp listcmd.cpp mathcmd.cpp	    \
+		  userinterface.cpp gc.cpp hashcmd.cpp setcmd.cpp vminterp.cpp
+cxx_hdr		= lexer.hh nodes.hh environment.hh nodefactory.hh reader.hh \
+		  evaluator.hh interpreter.hh lispelvm.hh corecmd.hh	    \
+		  exception.hh defs.hh utilities.hh listcmd.hh mathcmd.hh   \
+		  userinterface.hh gc.hh iterator.hh hashcmd.hh setcmd.hh   \
+		  vminterp.hh
+
+mclibs		= -lmiscclass -lmc_linux
+
+objnames	= $(c_src:.c=.o) $(cxx_src:.cpp=.o)
+objs		= $(addprefix obj/,$(objnames))
+libname		= libispel.a
+
+all:	$(libname) lispel vminterp
+
+#.cc.o:
+#	$(CXX) $(CXXFLAGS) -c $<
+obj/%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $(notdir $<) -o $@
+
+.c.o:
+	$(CC) $(CFLAGS) -c $<
+
+-include depend
+
+lispel:	$(libname) obj/driver.o
+	$(CXX) $(LDFLAGS) -o lispel obj/driver.o -lispel $(mclibs)
+
+vminterp: $(libname) obj/vmdriver.o
+	$(CXX) $(LDFLAGS) -o vminterp obj/vmdriver.o -lispel $(mclibs)
+
+$(libname):	$(objs)
+	-$(RM) $(libname)
+	ar rvs $(libname) $(objs)
+	ranlib $(libname)
+
+.PHONY:	dep clean distclean wc
+
+dep:
+	$(CXX) $(CXXFLAGS) -M $(c_src) $(cxx_src) > depend
+
+clean:
+	-$(RM) *.o
+	-$(RM) obj/*.o
+
+distclean:	clean
+	-$(RM) $(libname)
+	-$(RM) lispel
+	-$(RM) vminterp
+	-$(RM) depend
+	-$(RM) *~
+	-$(RM) core
+
+wc:
+	wc *.cpp *.hh | sort -n
+

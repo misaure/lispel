@@ -1,0 +1,63 @@
+#!/usr/local/bin/perl
+$file = $ENV{'HOME'} . "/web/mirrors/qt/classes.html";
+$lib = "./qt.kdoc";
+$destUrl = "";
+
+$libdir = $ENV{ 'KDOCLIBS' };
+
+sub usage
+{
+	my( $arg ) = @_;
+
+	print
+	"qt2kdoc: Creates a kdoc reference file from Qt classes.html.\n\n".
+	"usage:\n\tqt2kdoc [-u<URL>] [-o<dest>] <path-to-classes.html>\n";
+
+	die "\nqt2kdoc: $arg.\n";
+
+}
+
+if( $#ARGV < 0 ) {
+	usage( "specify the location of classes.html" );
+}
+
+foreach $i ( 0.. $#ARGV ) {
+
+	# process arguments
+	$arg = $ARGV[ $i ];
+
+	if( $arg =~ /^-u(.*)/ ) {
+		$destUrl = $1 if $1 ne "";
+	}
+	elsif ( $arg =~ /^-o(.*)/ ) {
+		$libdir = $1 if $1 ne "";
+	}
+	elsif ( $arg =~ /^-(.*)/ ) {
+		usage( "-".$1.": unknown option" );
+	}
+	else {
+		$file = $ARGV[ $i ];
+	}
+}
+
+$destUrl = $file if $destUrl eq "";
+
+$lib = $libdir."/qt.kdoc" if $libdir ne "";
+
+open( IN, $file ) || die "Could not open $file for reading\n";
+open( OUT, ">$lib" ) || die "Could not open $lib for writing\n";
+
+print OUT "$destUrl\n";
+
+while ( <IN> )
+{
+    if ( /^<li><a href=\"([\w\.]*)\">([\w]*)<\/a>/ )
+    {
+	print OUT "$2=$1\n";
+    }
+}
+
+close( IN );
+close( OUT );
+
+print "Qt reference written to $lib\n";

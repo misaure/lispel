@@ -1,0 +1,10 @@
+;; This notes are intended for the code maintainers, only.
+;; If they appear in your distribution, then I made an error in
+;; packaging the distribution.
+
+define-Syntax für Closures
+gensym-Beispiele ausarbeiten
+Lispel-Beispielprogramme sollten lauffähig sein
+Code unter Windows (Mingw32/egcs-1.1.2 und gcc 2.95 ok) und DOS testen
+unbenötigte Codeteile entfernen
+miscclass unter Linux und Win32 lauffähig machen

@@ -1,0 +1,8 @@
+# KDE config file
+[KDE Desktop Entry]
+Comment=A neural network simulator
+Comment[de]=Ein Simulator für neuronale Netze
+Name=NNelmos
+Name[de]=NNelmos
+Exec=NNelmos
+Type=Application

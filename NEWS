@@ -1,0 +1,40 @@
+CHANGES BETWEEN LISPEL VERSIONS
+-------------------------------
+
+
+* Changes from 0.0.4 to 0.0.3					unreleased
+
+ - many, many code changes to add full ANSI-C++ compliance
+ - use external MiscClass class library
+
+* Changes from 0.0.3 to 0.0.2					unreleased
+
+ - improved scanner with support for character constants and proper
+   backslash substitution
+ - the sample command line driver can now be used as a UN*X script interpreter
+   (new comment introducer #!)
+ - improved error reporting
+ - proper handling of quoting character
+ - many bugfixes
+ ! this version wasn't released because of some bugs that would be fixed by
+   a new implementation of some components, which is scheduled for 0.1.0
+
+
+* Changes from 0.0.2 to 0.0.1					21-nov-1999
+
+ - better exception handling: uses a tree of exception classes, uses throw
+   declarations
+ - hashtable data type added
+ - added keywords known from ANSI Common Lisp
+ - improved lambda implementation (body can be a list of expressions)
+ - more than 50 builtins, important special forms cond, let, let* added
+
+
+* Version 0.0.1							15-nov-1999
+
+ - This is a very first implementation of the core of an interpreter for a
+   Lisp- (or Scheme-)like extension language. It serves as a prototype, only,
+   so many components will be replaced before the next major version comes out.
+
+$Id: NEWS,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
+

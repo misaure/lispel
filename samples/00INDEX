@@ -1,0 +1,9 @@
+FILES FOUND IN THIS DIRECTORY
+
+ lispel/	Some sample scripts that can be run in the standalone
+ 		interpreter
+
+ extension/	This directory contains the interpreter extensions from the
+		tutorial found in the doc directory under the name
+		EMBEDDING.html.
+
