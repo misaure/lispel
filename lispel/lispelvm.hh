@@ -11,7 +11,7 @@
 #define lispel_LISPELVM_HH_ 1
 
 #include <lispel/nodes.hh>
-#include <miscclass/exception.hh>
+#include <lispel/exception.hh>
 #include <lispel/exception.hh>
 #include <lispel/environment.hh>
 #include <lispel/evaluator.hh>
@@ -165,13 +165,13 @@ protected:
 
 
 /**
-   CompilingEvaluator transforms each newly allocated closure to an
+   <p>CompilingEvaluator transforms each newly allocated closure to an
    intermediate byte code representation which is based on the descriptions
    in Chapter 2 of 'Three Implementation Models for Scheme' by R. Kent Dybvig.
    This implementation differs in that it doesn't rely on the heap as strongly
    as the VM  described in the document. The machine's internal data will
    only be moved to heap when it is really needed, that is, when closures and
-   continuations are created.<p>
+   continuations are created.</p>
    @version 0.0
  */
 class CompilingEvaluator : public Evaluator {
@@ -181,9 +181,9 @@ public:
 
   virtual Handle_ptr eval( Handle_ptr);
   virtual Handle_ptr evalExpression( Handle_ptr)
-     throw( miscclass::RecoverableException);
+     throw( RecoverableException);
   virtual Handle_ptr evalVariable( Handle_ptr)
-     throw( miscclass::InternalInconsistency, UndefinedValue);
+     throw( InternalInconsistency, UndefinedValue);
 
 protected:
   Registers m_regs;
@@ -191,8 +191,7 @@ protected:
 
 
 /**
-  A (new and experimental) evaluator implementation which is similar to a
-  VM based evaluator.
+  A (new and experimental) evaluator implementation which is similar to a VM based evaluator.
   @version 0.1
 */
 class IterativeEvaluator : public Evaluator {
@@ -202,9 +201,9 @@ public:
    
   virtual Handle_ptr eval( Handle_ptr);
   virtual Handle_ptr evalExpression( Handle_ptr)
-     throw( miscclass::RecoverableException);
+     throw( RecoverableException);
   virtual Handle_ptr evalVariable( Handle_ptr)
-     throw( miscclass::InternalInconsistency, UndefinedValue);
+     throw( InternalInconsistency, UndefinedValue);
 
 protected:
   Registers m_regs;

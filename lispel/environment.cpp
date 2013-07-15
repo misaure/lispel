@@ -1,5 +1,5 @@
 #include <algorithm>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/environment.hh>
 
 Environment::Environment()

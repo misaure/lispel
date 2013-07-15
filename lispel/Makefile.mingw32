@@ -1,4 +1,4 @@
-# a simple Makefile for systems which aren´t able to run the
+# a simple Makefile for systems which aren't able to run the
 # autoconfiguration scripts
 
 CC		= gcc

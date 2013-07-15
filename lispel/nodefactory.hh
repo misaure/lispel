@@ -60,7 +60,7 @@ public:
      to signal a recoverable error because the garbage collector might be
      able to free space.
   */
-  struct MemoryExhausted : public miscclass::RecoverableException {
+  struct MemoryExhausted : public RecoverableException {
     MemoryExhausted( std::string where, int line)
       : RecoverableException( "memory exhausted", where, line) {}
     virtual ~MemoryExhausted() throw() {}
@@ -95,7 +95,7 @@ public:
      @param tok A token which is to be translated to a memory cell.
   */
   virtual Handle_ptr nodeFromToken( const Token_ptr tok)
-    throw( miscclass::InternalInconsistency);
+    throw( InternalInconsistency);
 
   /**
      Return the number of preallocated memory cells still available. This

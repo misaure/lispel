@@ -8,7 +8,7 @@
  */
 
 #include <algorithm>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/exception.hh>
 #include <lispel/lispelvm.hh>
 #include <lispel/utilities.hh>
@@ -242,14 +242,14 @@ Handle_ptr IterativeEvaluator::eval( Handle_ptr n)
 }
 
 Handle_ptr IterativeEvaluator::evalExpression( Handle_ptr n)
-   throw( miscclass::RecoverableException)
+   throw( RecoverableException)
 {
    MCAssertValidInstance();
    MCAssertNotReached( 0); //FIXME:
 }
 
 Handle_ptr IterativeEvaluator::evalVariable( Handle_ptr n)
-   throw( miscclass::InternalInconsistency, UndefinedValue)
+   throw( InternalInconsistency, UndefinedValue)
 {
    MCAssertValidInstance();
    MCAssertNotReached( 0); //FIXME:

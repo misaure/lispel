@@ -105,12 +105,12 @@ public:
   operator T*() { return m_cont; }
 
   /** Schreib- und Lesezugriff auf Elemente des Arrays. */
-  reference operator[]( int i) { return cont[i]; }
+  reference operator[]( int i) { return m_cont[i]; }
 
   /** Ausschlie†lich lesender Zugriff auf Elemente des Arrays. Es werden
       Kopien der Elemente zurÅckgeliefert.
   */
-  const_reference operator[]( int i) const { return cont[i]; }
+  const_reference operator[]( int i) const { return m_cont[i]; }
 };
 
 typedef array<char> char_ptr;
@@ -162,30 +162,6 @@ template<class T> struct tagged_ptr
   ~tagged_ptr();
   void incrRef() { ++rc; }
   void decrRef() { --rc; }
-};
-
-/**
-   Automatische Zeigervariable, die shared copies eines Zeigers auf ein
-   einzelnes Objekt verwaltet.
-   @short Automatische Zeigervariable mit ReferenzzÑhler.
-   @version 0.1
-   @author Michael Saure
-*/
-template<class T> class s_ptr
-{
-  /** Zeiger auf die verwalteten Daten. */
-  tagged_ptr<T> *cont;
-
-public:
-  s_ptr() { rc = 0; cont = 0; }
-
-  s_ptr( T *c) { rc = 1; cont = c; }
-
-  ~s_ptr() {
-    if (0 != cont && rc <= 1)
-      delete cont;
-    --rc;
-  }
 };
 
 #endif /*miscclass_POINTER_HH_*/

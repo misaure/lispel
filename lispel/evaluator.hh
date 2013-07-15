@@ -51,14 +51,14 @@ public:
      @param node A CONS node which is to be evaluated as an s-expression.
   */
   virtual Handle_ptr evalExpression( Handle_ptr node)
-    throw( miscclass::RecoverableException) =0;
+    throw( RecoverableException) =0;
 
   /**
      Evaluation of a variable boils down to looking it up in the current
      environment.
    */
   virtual Handle_ptr evalVariable( Handle_ptr node)
-    throw( UndefinedValue, miscclass::InternalInconsistency) =0;
+    throw( UndefinedValue, InternalInconsistency) =0;
 
   /**
      Creates a new child environment the current environment.
@@ -102,9 +102,9 @@ public:
 
   virtual Handle_ptr eval( Handle_ptr);
   virtual Handle_ptr evalExpression( Handle_ptr)
-    throw( miscclass::RecoverableException);
+    throw( RecoverableException);
   virtual Handle_ptr evalVariable( Handle_ptr)
-     throw( miscclass::InternalInconsistency, UndefinedValue);
+     throw( InternalInconsistency, UndefinedValue);
 };
 
 

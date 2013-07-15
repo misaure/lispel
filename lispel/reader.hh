@@ -11,7 +11,7 @@
 #define _lispel_READER_HH_ 1
 
 //#include <stack>
-#include <pair.h>
+#include <utility>
 #include <iostream>
 #include <lispel/nodes.hh>
 #include <lispel/pointer.hh>
@@ -23,7 +23,7 @@ class Scanner;
 class Reader {
 public:
 
-  class ReadException : public miscclass::RecoverableException {
+  class ReadException : public RecoverableException {
   public:
     ReadException( std::string what, std::string where, int line);
     virtual ~ReadException() throw();

@@ -102,13 +102,13 @@ void Handle::setCdr( Handle_ptr cdr) throw( TypeException)
 }
 
 const char *Handle::stringValue() const
-  throw( TypeException, miscclass::InternalInconsistency)
+  throw( TypeException, InternalInconsistency)
 {
   MCAssertValidInstance();
   if (hasType( ntSTRING) || hasType( ntSYMBOL)) {
     StringValue *strval = dynamic_cast<StringValue*>( val.m_value);
     if (0 == strval)
-      throw miscclass::InternalInconsistency( "null string", __FILE__, __LINE__);
+      throw InternalInconsistency( "null string", __FILE__, __LINE__);
     return strval->stringValue();
   }
   throw TypeException( "string or symbol", __FILE__, __LINE__);
@@ -117,13 +117,13 @@ const char *Handle::stringValue() const
 }
 
 char *Handle::stringValue()
-  throw( TypeException, miscclass::InternalInconsistency)
+  throw( TypeException, InternalInconsistency)
 {
   MCAssertValidInstance();
   if (hasType( ntSTRING) || hasType( ntSYMBOL) || hasType( ntKEYWORD)) {
     StringValue *strval = dynamic_cast<StringValue*>( val.m_value);
     if (0 == strval)
-      throw miscclass::InternalInconsistency( "null string", __FILE__, __LINE__);
+      throw InternalInconsistency( "null string", __FILE__, __LINE__);
     return strval->stringValue();
   }
   throw TypeException( "string or symbol", __FILE__, __LINE__);
@@ -200,7 +200,7 @@ void Handle::incRef()
 
 std::ostream &
 operator<<( std::ostream &os, const Handle &h)
-  throw( miscclass::InternalInconsistency)
+  throw( InternalInconsistency)
 {
   MCAssert( 0 != &h && 0 != &os, "trying to print (null) handle");
   MCAssert( 0 != &os, "trying to print on (null) stream");
@@ -213,7 +213,7 @@ operator<<( std::ostream &os, const Handle &h)
   int i;
   switch( h.m_nodetype) {
   case Handle::ntEMPTY:
-    throw miscclass::InternalInconsistency( "access to empty memory cell",
+    throw InternalInconsistency( "access to empty memory cell",
 					    __FILE__, __LINE__);
 
   case Handle::ntINTEGER:
@@ -464,26 +464,26 @@ VectorValue::incRef()
 
 const Handle *
 VectorValue::elementAt( int i) const
-  throw( miscclass::RecoverableException)
+  throw( RecoverableException)
 {
   MCAssertValidInstance();
   if (i < static_cast<int>( m_values.size()))
     return m_values[i];
   else
     //FIXME: create proper hierarchy of exceptions
-    throw miscclass::RecoverableException( "index out of bounds",
+    throw RecoverableException( "index out of bounds",
 					   __FILE__, __LINE__);
 }
 
 Handle *
-VectorValue::elementAt( int i) throw( miscclass::RecoverableException)
+VectorValue::elementAt( int i) throw( RecoverableException)
 {
   MCAssertValidInstance();
   if (i < static_cast<int>( m_values.size()))
     return m_values[i];
   else
     //FIXME: create proper hierarchy of exceptions
-    throw miscclass::RecoverableException( "index out of bounds",
+    throw RecoverableException( "index out of bounds",
 					   __FILE__, __LINE__);
 }
 
@@ -556,7 +556,7 @@ CommandImpl::name()
 std::ostream &
 CommandImpl::printToStream( std::ostream &os)
 {
-  throw miscclass::InternalInconsistency( "printing CommandImpl base class", 
+  throw InternalInconsistency( "printing CommandImpl base class", 
 					  __FILE__, __LINE__);
 }
 

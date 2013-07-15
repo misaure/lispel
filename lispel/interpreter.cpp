@@ -6,7 +6,7 @@
  */
 
 #include <fstream>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/interpreter.hh>
 #include <lispel/reader.hh>
 #include <lispel/userinterface.hh>
@@ -96,7 +96,7 @@ bool Interpreter::repl( std::istream *stream, UserInterface *ui)
     try {
        evaluated = m_ctx.eval->eval( retval); 		// evaluate expression
     }
-    catch( miscclass::RecoverableException rex) {
+    catch( RecoverableException rex) {
        ui->warning( rex.what());
     }
     if (0 != evaluated)

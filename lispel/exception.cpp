@@ -10,8 +10,38 @@
 #include <cstring>
 #include <cstdlib>
 #include <strstream>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/exception.hh>
+
+Exception::Exception()
+{
+}
+
+Exception::~Exception() throw()
+{
+}
+
+
+RecoverableException::RecoverableException(std::string message) : m_what(message)
+{
+}
+
+RecoverableException::RecoverableException(std::string message, std::string where, int line)
+{
+}
+
+RecoverableException::~RecoverableException() throw()
+{
+}
+
+
+InternalInconsistency::InternalInconsistency(std::string message)
+{
+}
+
+InternalInconsistency::InternalInconsistency(std::string message, std::string where, int line) : m_what(message)
+{
+}
 
 
 TypeException::TypeException( std::string expected, std::string where, int line)

@@ -16,7 +16,7 @@
 #include <list>
 #include <map>
 #include <iostream>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/context.hh>
 #include <lispel/exception.hh>
 #include <lispel/pointer.hh>
@@ -208,9 +208,9 @@ public:
   virtual void finalize();
   virtual void incRef();
   virtual Handle *elementAt( int i)
-    throw( miscclass::RecoverableException);
+    throw( RecoverableException);
   virtual const Handle *elementAt( int i) const
-    throw( miscclass::RecoverableException);
+    throw( RecoverableException);
   virtual size_type length() const;
   virtual std::ostream &printToStream( std::ostream &os) const;
 
@@ -589,9 +589,9 @@ public:
      value.
   */
   const char *stringValue() const
-    throw( TypeException, miscclass::InternalInconsistency);
+    throw( TypeException, InternalInconsistency);
   char  *stringValue()
-    throw( TypeException, miscclass::InternalInconsistency);
+    throw( TypeException, InternalInconsistency);
 
   /**
      Get the literal double value of a node.
@@ -652,7 +652,7 @@ public:
      style supported by the R4RS 'display' function.
   */
   friend std::ostream &operator<<( std::ostream &os, const Handle &h)
-    throw( miscclass::InternalInconsistency);
+    throw( InternalInconsistency);
   friend class NodeFactory;
   friend class GarbageCollector;
 

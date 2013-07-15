@@ -1,5 +1,5 @@
 #include <set>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/gc.hh>
 #include <lispel/nodefactory.hh>
 #include <lispel/environment.hh>

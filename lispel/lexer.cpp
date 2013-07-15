@@ -5,7 +5,7 @@
 #include <cassert>
 #include <lispel/lexer.hh>
 #include <lispel/exception.hh>
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 
 
 typedef unsigned long chartype;
@@ -26,9 +26,9 @@ static chartype CHARTYPE_RELOP   = (1L << 13);
 
 static chartype characterType[256];
 
-static char *NON_ID_CHARACTERS = "()'\";";
-static char *OPERATOR_CHARACTERS = "+-*/";
-static char *RELOP_CHARACTERS = "<>=";
+static const char *NON_ID_CHARACTERS = "()'\";";
+static const char *OPERATOR_CHARACTERS = "+-*/";
+static const char *RELOP_CHARACTERS = "<>=";
 
 inline static bool is_chartype( int c, chartype t)
 {
@@ -36,7 +36,7 @@ inline static bool is_chartype( int c, chartype t)
 }
 
 static struct {
-   char *name;
+   const char *name;
    char character;
 } defaultCharacterNames[] = {
   { "space",	' ' },

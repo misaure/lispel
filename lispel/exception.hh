@@ -14,7 +14,7 @@
 
 #include <iostream>
 #include <string>
-#include <miscclass/exception.hh>
+//#include <miscclass/exception.hh>
 
 /**
    @name Standard Exceptions
@@ -27,20 +27,41 @@
 */
 //@{
 
-class RecoverableException {
+class Exception {
+public:
+    Exception();
+    Exception(std::string what);
+    Exception(std::string what, std::string where, int line);
+    virtual ~Exception() throw();
+};
+
+class RecoverableException : public Exception {
 public:
 	RecoverableException(std::string message);
 	RecoverableException(std::string message, std::string where, int line);
-	~RecoverableException();
+	virtual ~RecoverableException() throw();
+    
+    const std::string &what() const { return m_what; }
 protected:
-	std::string m_message;
+	std::string m_what;
 };
 
+class InternalInconsistency : public Exception {
+public:
+    //InternalInconsistency();
+    InternalInconsistency(std::string message);
+    InternalInconsistency(std::string message, std::string where, int line);
+    virtual ~InternalInconsistency() throw();
+    
+    const std::string &what() const { return m_what; }
+protected:
+    std::string m_what;
+};
 
 /**
    Thrown when a function has been applied to an incompatible type.
 */
-class TypeException : public miscclass::RecoverableException {
+class TypeException : public RecoverableException {
 public:
   /**
      Create a exception with full error and debugging information.
@@ -55,7 +76,7 @@ public:
 /**
    Thrown when lookup of a symbols value fails.
 */
-class UndefinedValue : public miscclass::RecoverableException {
+class UndefinedValue : public RecoverableException {
 public:
   /**
      Create a exception instance with full error and debuggin information.
@@ -71,7 +92,7 @@ public:
    Signals that the number of actual arguments didn't match a functions
    arity during application.
 */
-class ArgumentCountException : public miscclass::RecoverableException {
+class ArgumentCountException : public RecoverableException {
 public:
   /**
      Create an ArgumentCountException with full debugging information.

@@ -40,7 +40,7 @@ VmCommand VmCommandReader::readCommand()
       }
       if (m_currentToken.hasType( Token::ttEOF))
 	//FIXME: throw specialized exception
-	throw miscclass::Exception( "end-of-file inside command", __FILE__, __LINE__);
+	throw Exception( "end-of-file inside command", __FILE__, __LINE__);
       switch( m_currentToken.tokennum()) {
       case Token::ttID:
       case Token::ttKEYWORD:

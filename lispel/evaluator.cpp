@@ -1,5 +1,5 @@
-#include <miscclass/defs.hh>
-#include <miscclass/exception.hh>
+#include <lispel/defs.hh>
+#include <lispel/exception.hh>
 #include <lispel/evaluator.hh>
 #include <lispel/nodes.hh>
 #include <lispel/utilities.hh>
@@ -77,7 +77,7 @@ Handle_ptr SimpleEvaluator::eval( Handle_ptr node)
 
 Handle_ptr 
 SimpleEvaluator::evalExpression( Handle_ptr node)
-   throw( miscclass::RecoverableException)
+   throw( RecoverableException)
 {
   MCAssertValidInstance();
   assert( 0 != node);
@@ -154,7 +154,7 @@ SimpleEvaluator::evalExpression( Handle_ptr node)
       return m_ctx.NIL;
 
     } else
-      throw miscclass::RecoverableException( "invalid expression type", __FILE__, __LINE__);
+      throw RecoverableException( "invalid expression type", __FILE__, __LINE__);
   }
 
   MCAssertNotReached( 0);
@@ -162,7 +162,7 @@ SimpleEvaluator::evalExpression( Handle_ptr node)
 
 Handle_ptr 
 SimpleEvaluator::evalVariable( Handle_ptr node)
-   throw( miscclass::InternalInconsistency, UndefinedValue)
+   throw( InternalInconsistency, UndefinedValue)
 {
   MCAssertValidInstance();
   assert( 0 != node);
@@ -174,7 +174,7 @@ SimpleEvaluator::evalVariable( Handle_ptr node)
 
   //FIXME: better error handling!
   if (0 == m_envStack.size() || 0 == m_envStack.top()) {
-    throw miscclass::InternalInconsistency( "eval stack corrupted", __FILE__, __LINE__);
+    throw InternalInconsistency( "eval stack corrupted", __FILE__, __LINE__);
   }
 
   Handle_ptr valueNode = m_envStack.top()->lookup( node->stringValue());

@@ -1,4 +1,4 @@
-#include <miscclass/defs.hh>
+#include <lispel/defs.hh>
 #include <lispel/nodes.hh>
 #include <lispel/nodefactory.hh>
 #include <lispel/lexer.hh>
@@ -203,7 +203,7 @@ Handle_ptr NodeFactory::makeClosure( std::list<Handle_ptr> args, Environment *en
 // HINT: this should be turned into a global function which takes a token and
 // a NodeFactory as an argument and returns a new Handle
 Handle_ptr NodeFactory::nodeFromToken( const Token_ptr tok)
-  throw( miscclass::InternalInconsistency)
+  throw( InternalInconsistency)
 {
   MCAssertValidInstance();
   assert( 0 != tok);
@@ -235,7 +235,7 @@ Handle_ptr NodeFactory::nodeFromToken( const Token_ptr tok)
       return makeCharacter( intVal);
       //FIXME: need new exception for this case
     std::cerr << "nodeFromToken( Token::ttCHARACTER) failed!" << std::endl;
-    throw miscclass::RecoverableException( "undefined character", __FILE__, __LINE__);
+    throw RecoverableException( "undefined character", __FILE__, __LINE__);
 
   case Token::ttFALSE:
     return m_ctx.FALSE;
@@ -245,7 +245,7 @@ Handle_ptr NodeFactory::nodeFromToken( const Token_ptr tok)
 
     //MISSING: add more cases here
   default:
-    throw miscclass::InternalInconsistency( "NodeFactory::nodeFromToken called for unknown tag", __FILE__, __LINE__);
+    throw InternalInconsistency( "NodeFactory::nodeFromToken called for unknown tag", __FILE__, __LINE__);
   }
 }
 
@@ -335,7 +335,7 @@ void NodeFactory::recycleNode( Handle_ptr node)
 {
   MCAssertValidInstance();
   if (0 == node)
-    throw miscclass::InternalInconsistency( "NodeFactory::recyclyNode: cannot free node (null)", __FILE__, __LINE__);
+    throw InternalInconsistency( "NodeFactory::recyclyNode: cannot free node (null)", __FILE__, __LINE__);
 
   if (node->checkFlag( Handle::GCSAFEFLAG))
     return;

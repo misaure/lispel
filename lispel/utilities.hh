@@ -11,6 +11,7 @@
 #define _lispel_UTILITIES_HH_
 
 #include <lispel/nodes.hh>
+#include <lispel/nodefactory.hh>
 
 static inline bool eq( const Handle *n1, const Handle *n2) {
   return n1==n2;
