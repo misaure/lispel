@@ -3,6 +3,17 @@ lispel
 
 A simple interpreter for a Scheme-like scripting language
 
+Compiling
+=========
+
+To build the Lispel command line tool, do the following
+
+  $ cd lispel
+  $ make -f Makefile.simple
+
+The automake process will not work any more (it actually is 12 years old...),
+but I hope to be able to replace it with something useful very soon.
+
 History
 =======
 
