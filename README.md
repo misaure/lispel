@@ -8,8 +8,10 @@ Compiling
 
 To build the Lispel command line tool, do the following
 
+<pre><code>
   $ cd lispel
   $ make -f Makefile.simple
+</code></pre>
 
 The automake process will not work any more (it actually is 12 years old...),
 but I hope to be able to replace it with something useful very soon.
