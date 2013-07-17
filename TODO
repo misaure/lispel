@@ -14,9 +14,11 @@ general
   Design and and efficiency always lend themselves to a wealth of improvements.
 
   Wrap the code into a common namespace. [9]
+  (https://github.com/misaure/lispel/issues/4)
 
   Too many classes have very stupid and misleading names. This should be
   changed before any version of Lispel is released to the public. [9]
+  (https://github.com/misaure/lispel/issues/5)
 
 | It would be nice to add support for zlib to allow for encrypted script files.
   [9]
