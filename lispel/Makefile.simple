@@ -29,7 +29,7 @@ cxx_hdr		= lexer.hh nodes.hh environment.hh nodefactory.hh reader.hh \
 		  userinterface.hh gc.hh iterator.hh hashcmd.hh setcmd.hh   \
 		  vminterp.hh
 
-mclibs		= -lmiscclass -lmc_linux
+mclibs		= 
 
 objnames	= $(c_src:.c=.o) $(cxx_src:.cpp=.o)
 objs		= $(addprefix obj/,$(objnames))

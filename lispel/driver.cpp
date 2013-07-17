@@ -123,9 +123,9 @@ int main( int argc, char *argv[])
       interp.repl( &infile, &ui);
     }
   }
-  catch( miscclass::Exception e) {
+  catch( Exception e) {
     std::cerr << "\nexception caught:" << std::endl;
-    std::cerr << e << std::endl;
+    std::cerr << e.what() << std::endl;
   }
   catch( ...) {
     // exceptions thrown by the C++ library

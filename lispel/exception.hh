@@ -33,6 +33,10 @@ public:
     Exception(std::string what);
     Exception(std::string what, std::string where, int line);
     virtual ~Exception() throw();
+
+    const std::string &what() const { return m_what; }
+protected:
+	std::string m_what;
 };
 
 class RecoverableException : public Exception {
@@ -40,10 +44,6 @@ public:
 	RecoverableException(std::string message);
 	RecoverableException(std::string message, std::string where, int line);
 	virtual ~RecoverableException() throw();
-    
-    const std::string &what() const { return m_what; }
-protected:
-	std::string m_what;
 };
 
 class InternalInconsistency : public Exception {
@@ -52,10 +52,6 @@ public:
     InternalInconsistency(std::string message);
     InternalInconsistency(std::string message, std::string where, int line);
     virtual ~InternalInconsistency() throw();
-    
-    const std::string &what() const { return m_what; }
-protected:
-    std::string m_what;
 };
 
 /**

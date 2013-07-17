@@ -17,20 +17,15 @@ Exception::Exception()
 {
 }
 
+Exception::Exception(std::string _what) : m_what(_what)
+{
+}
+
+Exception::Exception(std::string what, std::string where, int line) : m_what(what)
+{
+}
+
 Exception::~Exception() throw()
-{
-}
-
-
-RecoverableException::RecoverableException(std::string message) : m_what(message)
-{
-}
-
-RecoverableException::RecoverableException(std::string message, std::string where, int line)
-{
-}
-
-RecoverableException::~RecoverableException() throw()
 {
 }
 
@@ -39,7 +34,23 @@ InternalInconsistency::InternalInconsistency(std::string message)
 {
 }
 
-InternalInconsistency::InternalInconsistency(std::string message, std::string where, int line) : m_what(message)
+InternalInconsistency::InternalInconsistency(std::string message, std::string where, int line)
+{
+}
+ 
+InternalInconsistency::~InternalInconsistency() throw()
+{
+}
+
+RecoverableException::RecoverableException(std::string message)
+{
+}
+
+RecoverableException::RecoverableException(std::string message, std::string where, int line)
+{
+}
+
+RecoverableException::~RecoverableException() throw()
 {
 }
 
