@@ -19,13 +19,31 @@ testprogs	= chartypes$(EXEEXT) scanner0$(EXEEXT) checkeval$(EXEEXT) \
 		  nodefactory0$(EXEEXT) nodefactory1$(EXEEXT)		  \
 		  reader0$(EXEEXT) environment0$(EXEEXT) cat$(EXEEXT)	  \
 		  interp0$(EXEEXT) interp1$(EXEEXT) nil0$(EXEEXT)	  \
-		  xlateChar$(EXEEXT) 
+		  xlateChar$(EXEEXT) boosttests$(EXEEXT)
 
 all:		$(testprogs)
+
+runall:		$(testprogs)
+	./boosttests
+	./chartypes
+	./checkeval
+	./environment0
+	./interp0
+	./interp1
+	./nil0
+	./nodefactory0
+	./nodefactory1
+	./reader0
+	./scanner0
+	./xlateChar
+	
 
 # -------------------------------------------------------------------------
 .cc.o:
 	$(CXX) $(CXXFLAGS) -c $<
+
+boosttests$(EXEEXT):	boosttests.o
+	$(CXX) $(LDFLAGS) -o boosttests$(EXEEXT) boosttests.o -lboost_unit_test_framework -lispel
 
 
 nil0$(EXEEXT):		nil0.o $(deps)

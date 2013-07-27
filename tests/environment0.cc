@@ -1,6 +1,8 @@
 #include <cstdio> //sprintf
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 int main( int argc, char *argv[])
 {
   Interpreter interp;

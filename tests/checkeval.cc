@@ -1,5 +1,7 @@
 #include <lispel/nodes.hh>
 
+using namespace std;
+
 int main( void)
 {
   NodeValue *val = new StringValue( "a little test");

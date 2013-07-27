@@ -29,6 +29,10 @@ Exception::~Exception() throw()
 {
 }
 
+std::ostream &operator<<( std::ostream &os, const Exception e)
+{
+    return os << e.what();
+}
 
 InternalInconsistency::InternalInconsistency(std::string message)
 {

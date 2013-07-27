@@ -35,9 +35,16 @@ public:
     virtual ~Exception() throw();
 
     const std::string &what() const { return m_what; }
+    const std::string &where() const { return m_where; }
+    int line() const { return m_line; }
+
 protected:
-	std::string m_what;
+    std::string m_what;
+    std::string m_where;
+    int m_line;
 };
+
+extern std::ostream &operator<<( std::ostream &os, const Exception e);
 
 class RecoverableException : public Exception {
 public:

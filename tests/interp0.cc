@@ -10,6 +10,8 @@
 #include <fstream>
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 int main( int argc, char *argv[])
 {
    Interpreter interp;
@@ -28,7 +30,7 @@ int main( int argc, char *argv[])
      }
    }
 
-   catch( LispelException e) {
+   catch( Exception e) {
      // subclasses of lispel_exceptions signal error situations that occured
      // during the execution of a Lispel program.
      cerr << "\nexception caught:" << endl;

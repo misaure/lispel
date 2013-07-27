@@ -10,6 +10,8 @@
 #include <iostream>
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 char *builtins[] = {
   "lambda", "display", "car", "cdr", 
   0
@@ -53,7 +55,7 @@ int main( void)
     interp.evaluator()->eval( exprCons);
   }
 
-  catch( LispelException e) {
+  catch( Exception e) {
     cerr << "EXCEPTION: " << e << endl;
   }
   catch( const char *s) {

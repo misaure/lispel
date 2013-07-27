@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std; 
+
 void cat( const char *filename)
 {
    ifstream infile( filename);

@@ -10,6 +10,8 @@
 
 #include <lispel/lispel.hh> //printList, stllist2List
 
+using namespace std;
+
 typedef list<Handle_ptr> HandleList;
 
 

@@ -2,6 +2,8 @@
 #include <cstdlib> //exit()
 #include <lispel/lexer.hh>
 
+using namespace std;
+
 int main( int argc, char *argv[])
 {
    if (1 == argc) {

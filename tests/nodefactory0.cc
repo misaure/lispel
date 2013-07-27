@@ -10,6 +10,8 @@
 
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 typedef vector<Handle_ptr> HandleVector;
 
 #define assert_type( TYPE) assert( newNode->hasType( TYPE))
@@ -74,7 +76,7 @@ int main( void)
     printList( firstNode, cout);
     cout << endl;
   }
-  catch( LispelException lex) {
+  catch( Exception lex) {
     cerr << "\nEXCEPTION: " << lex << endl;
   }
   catch( ...) {

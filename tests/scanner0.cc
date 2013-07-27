@@ -2,6 +2,8 @@
 #include <fstream>
 #include <lispel/lexer.hh>
 
+using namespace std;
+
 int main( void)
 {
   initLexerModule();

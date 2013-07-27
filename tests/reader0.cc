@@ -3,6 +3,8 @@
 #include <cstdlib> //exit()
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 int main( int argc, char *argv[])
 {
   Interpreter interp;
@@ -26,7 +28,7 @@ int main( int argc, char *argv[])
     }
     cerr << "free memory: " << nodeFactory.freeCount() << endl;
   }
-  catch( LispelException lex) {
+  catch( Exception lex) {
     cerr << "\nEXCEPTION: " << lex << endl;
   }
 
@@ -42,4 +44,4 @@ int main( int argc, char *argv[])
 
   return 0;
 }
-			  
+

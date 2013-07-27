@@ -1,5 +1,7 @@
 #include <lispel/lispel.hh>
 
+using namespace std;
+
 int main( void)
 {
    Interpreter interp;
