@@ -4,7 +4,7 @@
  *   Declarations of binding environments which are used to establish
  *   name to value mappings.
  *
- * (c) 1999-2001 by Michael Saure <MichaelSaure@web.de>
+ * (c) 1999-2014 by Michael Saure <MichaelSaure@web.de>
  * RCSID: $Id: environment.hh,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
  */
 

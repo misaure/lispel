@@ -1,7 +1,7 @@
 /*
  * lexer.hh ---
  *
- *   Lexical scanner for Scheme.
+ *   Lexical scanner for Lispel, a Scheme dialect.
  *
  * (c) 1999-2001 by Michael Saure <MichaelSaure@web.de>
  * RCSID: $Id: lexer.hh,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
@@ -19,6 +19,7 @@
 
 /**
    @name Lexical Scanner Routines
+ 
    The classes and functions in this sections make up the lexical analysis part
    of the LispScript interpreter. They should be general enough to be used in
    other contexts, for example for reading configuration files. The only thing
