@@ -8,10 +8,11 @@ int main( void)
 
   cout << "val == " << val
        << ", eval() == " << val->eval() << endl;
-  if (val != val->eval())
+  if (val != val->eval()) {
     cout << "FAILURE" << endl;
-  else
+  } else {
     cout << "OK" << endl;
+  }
 
   return 0;
 }
