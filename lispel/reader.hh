@@ -54,8 +54,6 @@ public:
      can, of course, be changed to some more efficient implementation by
      subclassing the Reader class and passing the derived class to the
      interpreter.
-     @param nodeFactory A NodeFactory instance which produces tagged memory
-     cells from tokens.
   */
   SimpleReader( Context &ctx);
   virtual ~SimpleReader();
