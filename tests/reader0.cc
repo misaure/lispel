@@ -10,7 +10,7 @@ int main( int argc, char *argv[])
   Interpreter interp;
   NodeFactory &nodeFactory = *(interp.context().factory);
 
-  initLexerModule();
+  Lexer::initLexerModule();
 
   istream *infile = &cin;
   if (argc == 2)

@@ -5,6 +5,7 @@
  * RCSID: $Id: setcmd.cpp,v 1.1.1.1 2001/10/31 15:44:42 michael Exp $
  */
 
+#include <cassert>
 #include <lispel/setcmd.hh>
 #include <lispel/lispel.hh>
 

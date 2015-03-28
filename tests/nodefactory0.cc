@@ -8,6 +8,7 @@
  * RCSID: $Id: nodefactory0.cc,v 1.1.1.1 2001/10/31 15:44:43 michael Exp $
  */
 
+#include <cassert>
 #include <lispel/lispel.hh>
 
 using namespace std;

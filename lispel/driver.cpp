@@ -1,5 +1,5 @@
 /*
- * driver.cc ---
+ * driver.cpp ---
  *
  *   A small main program for a stand-alone version of the interpreter.
  *
@@ -98,7 +98,8 @@ int main( int argc, char *argv[])
 
   Interpreter interp;
   try {
-    initLexerModule();
+    Lexer::initLexerModule();
+    
     addCoreCommands( interp);
     addListCommands( interp);
     addMathCommands( interp);

@@ -205,27 +205,31 @@ typedef Token *Token_ptr;
 
 extern const char *tokennumToString( Token::TokenType tokennum);
 
-/**
-   Translate the character name part of a string constant to a single
-   character. All character names of length 1 represent the character itself.
-   @return Returns -1 if the character name can't be translated to a
-   character.
-*/
-int translateCharacter( const std::string &charname);
+class Lexer {
+public:
+    
+    /**
+       Translate the character name part of a string constant to a single
+       character. All character names of length 1 represent the character itself.
+       @return Returns -1 if the character name can't be translated to a
+       character.
+    */
+    static int translateCharacter( const std::string &charname);
 
-/**
-   This function must be called once before any scanner functionalities
-   are used because it initializes the character classification table used
-   by the scanner.
-   @memo Initialize lexical scanner subsytem.
-*/
-void initLexerModule();
+    /**
+       This function must be called once before any scanner functionalities
+       are used because it initializes the character classification table used
+       by the scanner.
+       @memo Initialize lexical scanner subsytem.
+    */
+    static void initLexerModule();
 
-/**
-   Print all character which are regarded as valid input characters, appended
-   by their types.
-*/
-void printChartypes();
+    /**
+       Print all character which are regarded as valid input characters, appended
+       by their types.
+    */
+    static void printChartypes();
+};
 
 //@}
 

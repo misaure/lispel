@@ -1,3 +1,4 @@
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/exception.hh>
 #include <lispel/evaluator.hh>

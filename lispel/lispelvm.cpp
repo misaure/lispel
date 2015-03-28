@@ -7,6 +7,7 @@
  * RCSID: $Id: lispelvm.cpp,v 1.2 2001/12/16 21:10:09 michael Exp $
  */
 
+#include <cassert>
 #include <algorithm>
 #include <lispel/defs.hh>
 #include <lispel/exception.hh>

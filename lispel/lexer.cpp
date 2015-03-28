@@ -7,7 +7,6 @@
 #include <lispel/exception.hh>
 #include <lispel/defs.hh>
 
-
 typedef unsigned long chartype;
 
 static chartype CHARTYPE_ILLEGAL = 0L;
@@ -50,8 +49,10 @@ static struct {
   { "backspace",'\b' },
   { "bs",	'\b' },
   { "backslash",'\\' },
+#ifdef VTAB_SUPPORTED
   { "vtab",	'\v' },
   { "vt",	'\v' },
+#endif
   { "escape",	'\033' },
   { "esc",	'\033' },
   { 0,          0 },
@@ -59,7 +60,8 @@ static struct {
 
 static std::map<std::string,char> charnameMap; 
 
-void initLexerModule()
+void 
+Lexer::initLexerModule()
 {
   int i;
   for (i=0; i<256; ++i) {
@@ -107,7 +109,8 @@ void initLexerModule()
   }
 }
 
-int translateCharacter( const std::string &charname)
+int
+Lexer::translateCharacter( const std::string &charname)
 {
   if (1 == charname.size())
     return static_cast<int>( charname[0]);
@@ -121,7 +124,8 @@ int translateCharacter( const std::string &charname)
   return -1;
 }
 
-void printChartypes()
+void
+Lexer::printChartypes()
 {
   int i;
   for (i=0; i<256; ++i) {

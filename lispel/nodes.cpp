@@ -3,13 +3,14 @@
  *
  *   Implementation of tagged memory cells on which the interpreter operates.
  *
- * (c) 1999 by Michael Saure
+ * (c) 1999 by Michael Saure <MichaelSaure@web.de>
  * RCSID: $Id: nodes.cpp,v 1.2 2001/12/16 21:10:09 michael Exp $
  */
 
 #include <cstdlib> //free
 #include <cstring> //strlen, strdup
 #include <algorithm>
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/exception.hh>
 #include <lispel/nodes.hh>
@@ -554,7 +555,7 @@ CommandImpl::name()
 }
 
 std::ostream &
-CommandImpl::printToStream( std::ostream &os)
+CommandImpl::printToStream( std::ostream &os) const
 {
   throw InternalInconsistency( "printing CommandImpl base class", 
 					  __FILE__, __LINE__);

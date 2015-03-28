@@ -1,7 +1,7 @@
 #ifndef lispel_DEFS_HH_
-#define lispel_DEFS_HH_
+#define lispel_DEFS_HH_ 1
 
-#include <cassert>
+//#include <cassert>
 //#warning "use miscclass/defs.hh instead"
 
 #ifndef _

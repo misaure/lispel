@@ -1,4 +1,4 @@
-#include <cassert> //REMOVEME:
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/reader.hh>
 #include <lispel/lexer.hh>

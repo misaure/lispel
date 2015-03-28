@@ -1,3 +1,4 @@
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/nodes.hh>
 #include <lispel/nodefactory.hh>
@@ -231,7 +232,7 @@ Handle_ptr NodeFactory::nodeFromToken( const Token_ptr tok)
     return makeDouble( doubleVal);
 
   case Token::ttCHARACTER:
-    if (-1 != (intVal = translateCharacter( tok->lexval())))
+    if (-1 != (intVal = Lexer::translateCharacter( tok->lexval())))
       return makeCharacter( intVal);
       //FIXME: need new exception for this case
     std::cerr << "nodeFromToken( Token::ttCHARACTER) failed!" << std::endl;
@@ -275,7 +276,7 @@ void NodeFactory::untagNonEmpty()
 {
   size_type i;
   for (i=0; i<m_size; ++i)
-    if (!Handle::ntEMPTY == m_cells[i].type())
+    if (! (Handle::ntEMPTY == m_cells[i].type()))
       m_cells[i].m_refcount = 0;
 #if defined( DEBUG) && DEBUG > 5
   for (i=0; i<m_size; ++i)

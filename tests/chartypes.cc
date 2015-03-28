@@ -2,8 +2,8 @@
 
 int main( void)
 {
-  initLexerModule();
-  printChartypes();
+  Lexer::initLexerModule();
+  Lexer::printChartypes();
 
   return 0;
 }

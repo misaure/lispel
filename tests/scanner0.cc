@@ -6,7 +6,7 @@ using namespace std;
 
 int main( void)
 {
-  initLexerModule();
+  Lexer::initLexerModule();
 
   for (;;) {
     if (!cin)

@@ -13,10 +13,10 @@ int main( int argc, char *argv[])
       exit( EXIT_FAILURE);
    }
 
-   initLexerModule();
+   Lexer::initLexerModule();
    int i;
    for (i=1; i<argc; ++i)
-     cout << argv[i] << " = " << translateCharacter( argv[i]) << endl;
+     cout << argv[i] << " = " << Lexer::translateCharacter( argv[i]) << endl;
 
    exit( EXIT_SUCCESS);
 }

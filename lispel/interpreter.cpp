@@ -6,11 +6,14 @@
  */
 
 #include <fstream>
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/interpreter.hh>
+#include <lispel/lexer.hh>
 #include <lispel/reader.hh>
 #include <lispel/userinterface.hh>
 #include <lispel/exception.hh>
+#include <lispel/lexer.hh>
 
 Interpreter *Interpreter::M_globalInstance = 0;
 
@@ -39,7 +42,7 @@ Interpreter::Interpreter()
   m_gc = factory.createGC( m_ctx);
 
   if (!M_lexer_initialized) {
-    initLexerModule();
+    Lexer::initLexerModule();
     M_lexer_initialized = true;
   }
   m_exitRequested = m_gcRequested = false;
@@ -61,7 +64,7 @@ Interpreter::Interpreter( Interpreter::ComponentFactory *factory)
   m_ctx.FALSE->setFlag( Handle::GCSAFEFLAG);
 
   if (!M_lexer_initialized) {
-    initLexerModule();
+    Lexer::initLexerModule();
     M_lexer_initialized = true;
   }
   m_exitRequested = m_gcRequested = false;

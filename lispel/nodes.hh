@@ -3,7 +3,8 @@
  *
  *   Implementation of tagged memory cells on which the interpreter operates.
  *
- * (c) 1999-2001 by Michael Saure
+ * (c) 1999-2001 by Michael Saure <MichaelSaure@web.de>
+ * 
  * RCSID: $Id: nodes.hh,v 1.2 2001/12/16 21:10:09 michael Exp $
  */
 
@@ -242,7 +243,7 @@ public:
   virtual const std::string &name() const;
   virtual std::string name();
 
-  virtual std::ostream &printToStream( std::ostream &os);
+  virtual std::ostream &printToStream( std::ostream &os) const;
 
 protected:
   std::string m_name;

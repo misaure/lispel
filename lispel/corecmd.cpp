@@ -9,6 +9,7 @@
 
 #include <list>
 #include <ctime>
+#include <cassert>
 #include <lispel/corecmd.hh>
 #include <lispel/lispel.hh>
 #include "version.h"
@@ -24,8 +25,9 @@ LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   assert( 0 != env && 0 != ctx.eval && 0 != expr);
 
   Handle_ptr args = expr->cdr();
-  if (!isList( args->car()))
+  if (!isList( args->car())) {
     throw TypeException( "list", __FILE__, __LINE__);
+  }
   
   // collect argument names and check if argument specification is valid
   std::list<Handle_ptr> argumentList;
@@ -34,8 +36,9 @@ LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
      copyList( args->car(), iiter);
      std::list<Handle_ptr>::iterator pos;
      for (pos=argumentList.begin(); pos!=argumentList.end(); ++pos) {
-       if (!(*pos)->hasType( Handle::ntSYMBOL))
+       if (!(*pos)->hasType( Handle::ntSYMBOL)) {
          throw TypeException( "symbol", __FILE__, __LINE__);
+       }
      }
   } else {
      // empty argument list
@@ -71,9 +74,9 @@ CondCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
       if (!eq( ctx.eval->eval( evaluated), ctx.FALSE)) {
         // expression evaluates to true, so evaluate remaining expressions in
 	// the current branch and return result of last evaluation
-	for ( exprList=exprList->cdr(); !eq( exprList, ctx.NIL);
-	      exprList=exprList->cdr()) 
+	for ( exprList=exprList->cdr(); !eq( exprList, ctx.NIL); exprList=exprList->cdr()) {
 	    evaluated = ctx.eval->eval( exprList->car());
+        }
 	return evaluated;
       }
    }
@@ -310,8 +313,10 @@ Handle_ptr displayCommand( CBuiltinAdapter *adapter, Context &ctx,
 			   Environment *env, std::vector<Handle_ptr> args)
 {
   std::vector<Handle_ptr>::iterator pos;
-  for (pos = args.begin(); pos != args.end(); ++pos)
+  for (pos = args.begin(); pos != args.end(); ++pos) {
      std::cout << *(*pos) << std::endl;
+  }
+  
   return ctx.TRUE; //FIXME: what should be returned to be standards compliant?
 }
 

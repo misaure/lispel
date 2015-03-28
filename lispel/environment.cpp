@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include <lispel/defs.hh>
 #include <lispel/environment.hh>
 

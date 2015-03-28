@@ -1,3 +1,4 @@
+#include <cassert>
 #include <set>
 #include <lispel/defs.hh>
 #include <lispel/gc.hh>
@@ -43,8 +44,9 @@ int SimpleGC::fullGC()
   for (envIter=activeEnvs.begin(); envIter!=activeEnvs.end(); ++envIter) {
     Environment::iterator bindingIter;
     for (bindingIter=(*envIter)->begin(); bindingIter!=(*envIter)->end();
-	 ++bindingIter)
+	 ++bindingIter) {
       (*bindingIter).second->incRef();
+    }
   }
 
   // tag all nodes referenced by nodes tagged in the previous step
