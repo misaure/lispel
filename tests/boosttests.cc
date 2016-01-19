@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(keywordTokenTest)
     
     is >> t;
     
-    BOOST_CHECK(t.hasType(Token::ttKEYWORD));
+    BOOST_CHECK(t.hasType(Token::ttID));
     BOOST_CHECK(t.lexval() == std::string("string->symbol"));
 }
 

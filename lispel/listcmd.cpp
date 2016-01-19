@@ -10,6 +10,8 @@ lengthCommand( CBuiltinAdapter *owner, Context &ctx, Environment *env,
 
   if (isList( args[0]))
     return ctx.factory->makeInteger( listlength( args[0]));
+  
+  throw TypeException("expected list");
 }
 
 Handle_ptr
@@ -60,5 +62,8 @@ void addListCommands( Interpreter &interp)
   interp.addBuiltin( "null?",  nullPredicate);
   interp.addBuiltin( "set-car!", setCarFCommand);
   interp.addBuiltin( "set-cdr!", setCdrFCommand);
+  
+  // TODO (list? x)
+  // TODO (pair? x)
 }
 

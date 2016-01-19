@@ -1,10 +1,11 @@
 CC		= gcc
 CXX		= c++
-CFLAGS		= -g -Wall -I..
-CXXFLAGS	= -g -Wall -I..
+CPPFLAGS	= -I.. -I/usr/local/include
+CFLAGS		= -g -Wall $(CPPFLAGS)
+CXXFLAGS	= -g -Wall $(CPPFLAGS)
 #CFLAGS		= -Wall -O3 -I..
 #CXXFLAGS	= -Wall -O3 -I..
-LDFLAGS		= -L../lispel
+LDFLAGS		= -L../lispel -L/usr/local/lib
 
 RM		= rm -f
 
@@ -19,12 +20,13 @@ testprogs	= chartypes$(EXEEXT) scanner0$(EXEEXT)  \
 		  nodefactory0$(EXEEXT) nodefactory1$(EXEEXT)		  \
 		  reader0$(EXEEXT) environment0$(EXEEXT) cat$(EXEEXT)	  \
 		  interp0$(EXEEXT) interp1$(EXEEXT) 	  \
-		  xlateChar$(EXEEXT) boosttests$(EXEEXT)
+		  xlateChar$(EXEEXT) boosttests$(EXEEXT) mathcmdtests$(EXEEXT)
 
 all:		$(testprogs) runall
 
 runall:		$(testprogs)
 	./boosttests
+	./mathcmdtests
 	./chartypes
 	./environment0
 	./nodefactory0
@@ -40,6 +42,9 @@ runall:		$(testprogs)
 
 boosttests$(EXEEXT):	boosttests.o
 	$(CXX) $(LDFLAGS) -o boosttests$(EXEEXT) boosttests.o  -lboost_unit_test_framework -lispel
+
+mathcmdtests$(EXEEXT):	mathcmdtests.o
+	$(CXX) $(LDFLAGS) -o mathcmdtests$(EXEEXT) mathcmdtests.o  -lboost_unit_test_framework -lispel
 
 
 nil0$(EXEEXT):		nil0.o $(deps)

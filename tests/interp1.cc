@@ -12,7 +12,7 @@
 
 using namespace std;
 
-char *builtins[] = {
+char const* builtins[] = {
   "lambda", "display", "car", "cdr", 
   0
 };
