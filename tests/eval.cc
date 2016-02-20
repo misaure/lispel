@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib> //exit()
-#include <lscript/reader.hh>
+#include "lispel/reader.hh"
 
 int main( int argc, char *argv[])
 {

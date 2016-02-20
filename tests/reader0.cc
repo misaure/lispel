@@ -24,11 +24,10 @@ int main( int argc, char *argv[])
       cout << "> read returned " << retval << endl;
       if (retval->hasType( Handle::ntCONS))
         printList( retval, cout);
-      //nodeFactory.display( retval, &cout);
     }
     cerr << "free memory: " << nodeFactory.freeCount() << endl;
   }
-  catch( Exception lex) {
+  catch( const Exception &lex) {
     cerr << "\nEXCEPTION: " << lex << endl;
   }
 
@@ -38,9 +37,6 @@ int main( int argc, char *argv[])
   catch( ...) {
     cerr << "\nEXCEPTION CAUGHT!" << endl;
   }
-
-  //if (infile != &cin)
-  //   delete infile;
 
   return 0;
 }

@@ -1,7 +1,38 @@
 #include <gtest/gtest.h>
 #include "lispel/environment.hh"
+#include "lispel/nodefactory.hh"
+#include "lispel/interpreter.hh"
 
-TEST(EnvTest,testIsToplevelEnvironment) {
+namespace {
+
+class EnvTest : public ::testing::Test {
+public:
+	EnvTest() : toplevel(0), current(0) { }
+	virtual ~EnvTest();
+	virtual void SetUp();
+	virtual void TearDown();
+	virtual NodeFactory &factory();
+
+	Interpreter interp;
+	Environment *toplevel, *current;
+};
+
+EnvTest::~EnvTest() {
+}
+
+void EnvTest::SetUp() {
+	toplevel = current = new Environment();
+}
+
+void EnvTest::TearDown() {
+	current = toplevel = 0;
+}
+
+NodeFactory &EnvTest::factory() {
+	return *(interp.context().factory);
+}
+
+TEST_F(EnvTest,testIsToplevelEnvironment) {
 	Environment *env1 = new Environment();
 	Environment *env2 = new Environment(env1);
 
@@ -9,7 +40,7 @@ TEST(EnvTest,testIsToplevelEnvironment) {
 	ASSERT_TRUE(env2->isToplevelEnvironment());
 }
 
-TEST(EnvTest,testMakeChildEnvironment) {
+TEST_F(EnvTest,testMakeChildEnvironment) {
 	Environment *env1 = new Environment();
 	Environment *env2 = env1->makeChildEnvironment();
 
@@ -20,24 +51,24 @@ TEST(EnvTest,testMakeChildEnvironment) {
 	ASSERT_FALSE(env2->isToplevelEnvironment());
 }
 
-TEST(EnvTest,testDirectLookup) {
+TEST_F(EnvTest,testDirectLookup) {
 	Environment *env = new Environment();
-	env->put(std::string("testval"), new IntegerHandle());
+	env->put(std::string("testval"), factory().makeInteger(0));
 
 	ASSERT_TRUE(env->exists("testval"));
-	Handle found = env->lookup("testval");
+	Handle_ptr found = env->lookup("testval");
 
 	ASSERT_FALSE(0 == found);
 }
 
-TEST(EnvTest,testParentLookup) {
+TEST_F(EnvTest,testParentLookup) {
 	Environment *parent = new Environment();
 	Environment *child = new Environment(parent);
 
-	parent->put("parentOnly", new IntegerHandle(1));
-	child->put("childOnly", new IntegerHandle(2));
-	parent->put("both", new IntegerHandle(7));
-	child->put("both", new IntegerHandle(8));
+	parent->put("parentOnly", factory().makeInteger(1));
+	child->put("childOnly", factory().makeInteger(2));
+	parent->put("both", factory().makeInteger(7));
+	child->put("both", factory().makeInteger(8));
 
 	ASSERT_EQ(1, parent->lookup("parentOnly")->integerValue());
 	ASSERT_EQ(2, child->lookup("childOnly")->integerValue());
@@ -48,3 +79,30 @@ TEST(EnvTest,testParentLookup) {
 	ASSERT_TRUE(0 == child->lookup("parentOnly"));
 }
 
+// TODO replace debug output with assertions
+TEST_F(EnvTest,testCascadedEnvironments) {
+	int i;
+	for (i = 0; i < 100; ++i) {
+		char buffer[100];
+		sprintf(buffer, "%d", i);
+		std::string s(buffer);
+		current->put(s, factory().makeString(buffer));
+		if (0 == (i % 10)) {
+			current = current->makeChildEnvironment();
+		}
+	}
+
+	for (i = 100; i >= 0; --i) {
+		char buffer[100];
+		sprintf(buffer, "%d", i);
+		std::string s(buffer);
+		Handle_ptr res = current->lookup(s);
+		if (0 != res) {
+			std::cout << s << " == " << *res << std::endl;
+		} else {
+			std::cout << s << " == (null)" << std::endl;
+		}
+	}
+}
+
+} //namespace
