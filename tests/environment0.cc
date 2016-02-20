@@ -1,5 +1,5 @@
 #include <cstdio> //sprintf
-#include <lispel/lispel.hh>
+#include "lispel/lispel.hh"
 
 using namespace std;
 
