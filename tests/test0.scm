@@ -10,7 +10,7 @@
     (write c)))
 
 ;; check recognition of quote characters
-(myfunc2 'hello 'strange 'world)
+(myfunc1 'hello 'strange 'world)
 
 ;; check if boolean literals are recognized
 (define false #f)
@@ -18,5 +18,5 @@
 
 ;; what happens with special characters like '*'?
 (let ((aNumber 100))
-  (setf newNumber (* aNumber aNumber)))
+  (set! newNumber (* aNumber aNumber)))
 
