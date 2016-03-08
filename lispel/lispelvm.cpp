@@ -206,12 +206,13 @@ Handle_ptr CompilingEvaluator::eval( Handle_ptr node)
   MCAssertValidInstance();
   MCAssert( 0 != node, "CompilingEvaluator::eval received null node");
 
-  if (node->hasType( Handle::ntCONS))
+  if (node->hasType( Handle::ntCONS)) {
     return evalExpression( node);
-  else if (node->hasType( Handle::ntSYMBOL))
+  } else if (node->hasType( Handle::ntSYMBOL)) {
     return evalVariable( node);
-  else
+  } else {
     return 0; //MISSING:
+  }
 }
 
 
@@ -219,7 +220,7 @@ Handle_ptr CompilingEvaluator::eval( Handle_ptr node)
  * IterativeEvaluator ---
  */
 
-IterativeEvaluator::IterativeEvaluator( Context &ctx, 
+IterativeEvaluator::IterativeEvaluator( Context &ctx,
 					ActivationStack::size_type ssz)
   : Evaluator( ctx), m_stack( ssz)
 {
@@ -234,12 +235,13 @@ Handle_ptr IterativeEvaluator::eval( Handle_ptr n)
 {
    MCAssertValidInstance();
 
-   if (n->hasType( Handle::ntCONS))
+   if (n->hasType( Handle::ntCONS)) {
       return (eq( n, m_ctx.NIL))? m_ctx.NIL : evalExpression( n);
-   else if (n->hasType( Handle::ntSYMBOL))
+   } else if (n->hasType( Handle::ntSYMBOL)) {
       return evalVariable( n);
-   else
+   } else {
       return n;
+   }
 }
 
 Handle_ptr IterativeEvaluator::evalExpression( Handle_ptr n)
@@ -247,6 +249,7 @@ Handle_ptr IterativeEvaluator::evalExpression( Handle_ptr n)
 {
    MCAssertValidInstance();
    MCAssertNotReached( 0); //FIXME:
+   return 0;
 }
 
 Handle_ptr IterativeEvaluator::evalVariable( Handle_ptr n)
@@ -254,4 +257,5 @@ Handle_ptr IterativeEvaluator::evalVariable( Handle_ptr n)
 {
    MCAssertValidInstance();
    MCAssertNotReached( 0); //FIXME:
+   return 0;
 }

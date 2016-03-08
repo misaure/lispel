@@ -99,7 +99,7 @@ bool Interpreter::repl( std::istream *stream, UserInterface *ui)
     try {
        evaluated = m_ctx.eval->eval( retval); 		// evaluate expression
     }
-    catch( RecoverableException rex) {
+    catch( const RecoverableException &rex) {
        ui->warning( rex.what());
     }
     if (0 != evaluated)

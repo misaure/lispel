@@ -59,6 +59,11 @@ RecoverableException::~RecoverableException() throw()
 }
 
 
+TypeException::TypeException(std::string expected) 
+  : RecoverableException(expected, "", 0)
+{
+}
+
 TypeException::TypeException( std::string expected, std::string where, int line)
   : RecoverableException( "type error: expected "+expected, where, line)
 {

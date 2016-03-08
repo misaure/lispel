@@ -28,7 +28,7 @@ LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   if (!isList( args->car())) {
     throw TypeException( "list", __FILE__, __LINE__);
   }
-  
+
   // collect argument names and check if argument specification is valid
   std::list<Handle_ptr> argumentList;
   if (!eq( args->car(), ctx.NIL)) {
@@ -55,7 +55,7 @@ LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   for (pos=argumentList.begin(); pos!=argumentList.end(); ++pos)
     std::cerr << *(*pos) << ' ';
   std::cerr << std::endl;
-#endif   
+#endif
 
   return ctx.factory->makeClosure( argumentList, env, args->cdr());
 }
@@ -65,7 +65,7 @@ Handle_ptr
 CondCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
    Handle_ptr args = expr->cdr();
-   
+
    Handle_ptr branch;   // iterate over all clauses/branches
    for (branch=args; !eq( branch, ctx.NIL); branch=branch->cdr()) {
       Handle_ptr exprList = branch->car();
@@ -99,7 +99,7 @@ QuoteCommand::execute( Context &ctx, Environment *env, Handle_ptr args)
 
   return args->cdr()->car();
 }
-  
+
 Handle_ptr
 DefineCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
@@ -115,16 +115,19 @@ DefineCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 		       ctx.eval->eval( args->cdr()->car()));
     return args->car();
 
-  } else
+  } else {
     if (args->car()->hasType( Handle::ntCONS) && !args->car()->isNilRep()) {
       // Funktionsdefinition
       std::cerr << "error: function definitions aren't supported right now" << std::endl;
       return ctx.NIL;
-      
+
     } else
       throw TypeException( "symbol or list", __FILE__, __LINE__);
-  
+  }
+
   MCAssertNotReached( 0);
+
+  return 0;
 }
 
 
@@ -166,7 +169,7 @@ LetCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
      std::cerr << "let expressions == ";
      printList( expr->cdr()->cdr(), std::cerr);
      std::cerr << std::endl;
-#endif 
+#endif
 
      for (pos=expr->cdr()->cdr(); !eq( pos, ctx.NIL); pos=pos->cdr())
         evaluated = ctx.eval->eval( pos->car());
@@ -180,6 +183,8 @@ LetCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   }
 
   MCAssertNotReached( 0);
+
+  return 0;
 }
 
 
@@ -219,7 +224,7 @@ LetStarCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
      std::cerr << "let expressions == ";
      printList( expr->cdr()->cdr(), std::cerr);
      std::cerr << std::endl;
-#endif 
+#endif
 
      for (pos=expr->cdr()->cdr(); !eq( pos, ctx.NIL); pos=pos->cdr())
         evaluated = ctx.eval->eval( pos->car());
@@ -233,6 +238,8 @@ LetStarCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   }
 
   MCAssertNotReached( 0);
+
+  return 0;
 }
 
 
@@ -303,7 +310,7 @@ TimeCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 
    return ctx.factory->makeDouble( static_cast<double>( stopwatch) /
    				   static_cast<double>( CLOCKS_PER_SEC));
-}   
+}
 
 
 /*
@@ -316,7 +323,7 @@ Handle_ptr displayCommand( CBuiltinAdapter *adapter, Context &ctx,
   for (pos = args.begin(); pos != args.end(); ++pos) {
      std::cout << *(*pos) << std::endl;
   }
-  
+
   return ctx.TRUE; //FIXME: what should be returned to be standards compliant?
 }
 
@@ -370,7 +377,7 @@ Handle_ptr beginCommand( CBuiltinAdapter *adapter, Context &ctx,
   return args[args.size()-1];
 }
 
-  
+
 Handle_ptr consCommand( CBuiltinAdapter *adapter, Context &ctx,
 			Environment *env, std::vector<Handle_ptr> args)
 {
@@ -417,7 +424,7 @@ versionCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
    return ctx.factory->makeString( LISPEL_VERSION);
 }
 
-Handle_ptr 
+Handle_ptr
 exitCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
 	     std::vector<Handle_ptr> args)
 {

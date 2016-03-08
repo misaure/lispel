@@ -3,7 +3,7 @@
  *
  *   Bytecode interpreting virtual machine for Lispel.
  *
- * (c) 1999-2001 by Michael Saure <MichaelSaure@web.de>
+ * (c) 1999-2016 by Michael Saure <MichaelSaure@web.de>
  * RCSID: $Id: lispelvm.hh,v 1.2 2001/12/16 21:10:09 michael Exp $
  */
 
@@ -20,7 +20,7 @@
 /**
    @name Lispel Virtual Machine
    The classes in this section can be used to easily build up an Interpreter
-   instance which operates on an intermediate byte code representation of 
+   instance which operates on an intermediate byte code representation of
    Scheme expressions.
    MISSING: Threads, performance opts for stack handling
 */
@@ -41,7 +41,7 @@ struct Registers {
 
   /**
      PC is similar to the program counter found in normal microprocessors.
-     Here, it more generally contains the rest of the expressions to be 
+     Here, it more generally contains the rest of the expressions to be
      executed.
   */
   Handle_ptr PC;
@@ -90,7 +90,7 @@ struct CallFrame {
   ~CallFrame();
 
   void load( Registers &regs) {
-    PC = regs.PC; VAL = regs.VAL; CE = regs.CE; 
+    PC = regs.PC; VAL = regs.VAL; CE = regs.CE;
   }
 
   void restore( Registers &regs) {
@@ -128,7 +128,7 @@ protected:
 
 /**
    This class implements the basic functions of a simple heap-based virtual
-   machine suitable for executing simple Lispel programs. To avoid any 
+   machine suitable for executing simple Lispel programs. To avoid any
    restrictions in the possible uses of this VM, this class isn't tied to any
    external representations like byte codes. It simply provides one method for
    each instruction, so that it can be used as the basis of a byte code
@@ -198,7 +198,7 @@ class IterativeEvaluator : public Evaluator {
 public:
   IterativeEvaluator( Context &ctx, ActivationStack::size_type ssz);
   ~IterativeEvaluator();
-   
+
   virtual Handle_ptr eval( Handle_ptr);
   virtual Handle_ptr evalExpression( Handle_ptr)
      throw( RecoverableException);

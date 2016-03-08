@@ -21,7 +21,7 @@ int main( int argc, char *argv[])
      addListCommands( interp);
      addMathCommands( interp);
 
-     if (1 == argc) 
+     if (1 == argc)
        interp.repl( &cin, new SimpleShellInterface());
      else {
        ifstream *strm = new ifstream( argv[1]);
@@ -30,7 +30,7 @@ int main( int argc, char *argv[])
      }
    }
 
-   catch( Exception e) {
+   catch( const Exception &e) {
      // subclasses of lispel_exceptions signal error situations that occured
      // during the execution of a Lispel program.
      cerr << "\nexception caught:" << endl;

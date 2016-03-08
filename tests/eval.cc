@@ -3,9 +3,11 @@
 #include <cstdlib> //exit()
 #include "lispel/reader.hh"
 
+using namespace std;
+
 int main( int argc, char *argv[])
 {
-  initLexerModule();
+  Lexer::initLexerModule();
 
   istream *infile = &cin;
   if (argc == 2)
@@ -14,11 +16,11 @@ int main( int argc, char *argv[])
   try {
     NodeFactory nodeFactory( 16192UL);
     cerr << "free memory: " << nodeFactory.freeCount() << endl;
-    Reader reader( &nodeFactory);
+    SimpleReader reader( &nodeFactory);
     Handle_ptr retval;
     while (0 != (retval = reader.read( infile))) {
       cout << "> read returned " << retval << endl;
-      if (retval->hasType( Handle::CONS))
+      if (retval->hasType( Handle::ntCONS))
         printList( retval, cout);
       //nodeFactory.display( retval, &cout);
     }
@@ -36,4 +38,4 @@ int main( int argc, char *argv[])
 
   return 0;
 }
-			  
+

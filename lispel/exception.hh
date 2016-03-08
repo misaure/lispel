@@ -66,6 +66,7 @@ public:
 */
 class TypeException : public RecoverableException {
 public:
+  explicit TypeException( std::string expected);
   /**
      Create a exception with full error and debugging information.
      @param excpected A string describing what parameter type(s) were expected.

@@ -1,7 +1,7 @@
 /*
  * nodefactory0.cc ---
  *
- *  Checks NodeFactory's make* and display functions and stlvect2List and 
+ *  Checks NodeFactory's make* and display functions and stlvect2List and
  *  printList from reader (nodefactory1 uses stllist2List instead of
  *  stlvect2List).
  *
@@ -30,17 +30,17 @@ int main( void)
     cout << "NIL: ";
     factory.display( interp.context().NIL, &cout);
     cout << endl;
-    
+
     /*
      * Create some nodes and display them one by one.
      */
     cout << "*** creating single nodes:" << endl;
     cout << "free memory: " << factory.freeCount() << endl;
     Handle_ptr newNode;
-    
+
     handles.push_back( newNode=factory.makeCharacter( 'a'));
     assert_type( Handle::ntCHARACTER);
-    
+
     handles.push_back( newNode=factory.makeBoolean( true));
     assert_type( Handle::ntBOOLEAN);
 
@@ -71,13 +71,13 @@ int main( void)
      */
     cout << "*** trying to create list from nodes created before:" << endl;
     //Handle_ptr firstNode = stlvect2List( factory, handles);
-    Handle_ptr firstNode = makeList( handles.begin(), handles.end(), 
+    Handle_ptr firstNode = makeList( handles.begin(), handles.end(),
 				     interp.context());
     cout << "  first node == " << *firstNode << endl;
     printList( firstNode, cout);
     cout << endl;
   }
-  catch( Exception lex) {
+  catch( const Exception &lex) {
     cerr << "\nEXCEPTION: " << lex << endl;
   }
   catch( ...) {

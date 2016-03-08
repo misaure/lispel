@@ -5,13 +5,13 @@
 
 Environment::Environment()
 {
-   registerEnv( this);
+   //registerEnv( this);
 }
 
 Environment::Environment( Environment* env)
 {
-  assert( 0);
-  registerEnv( this);
+  //assert( 0);
+  //registerEnv( this);
 }
 
 Environment::~Environment()
@@ -19,25 +19,31 @@ Environment::~Environment()
    MCAssertValidInstance();
 }
 
-Environment::value_type 
+Environment::value_type
 Environment::lookup( const std::string &name)
 {
   MCAssertValidInstance();
   Environment *current = this;
   for (;;) {
-    if (0 == current)
+    if (0 == current) {
       return 0;        // value not defined in any of the environments
+    }
+
     map_type::iterator pos = current->m_entries.find( name);
-    if (pos != current->m_entries.end())
+    if (pos != current->m_entries.end()) {
       return (*pos).second;              // found a value
+    }
+
     current = current->m_parent;  // search parent environment
   }
 
   MCAssertNotReached( 0);
+
+  return 0;
 }
 
 //FIXME: follow inheritance path
-bool 
+bool
 Environment::exists( const std::string &name)
 {
   MCAssertValidInstance();
@@ -52,16 +58,17 @@ Environment::exists( const std::string &name)
   }
 
   MCAssertNotReached( 0);
+  return false;
 }
 
-void 
+void
 Environment::put( const std::string name, Environment::value_type envptr)
 {
   MCAssertValidInstance();
   m_entries[name] = envptr;
 }
 
-void 
+void
 Environment::clear()
 {
   m_entries.clear();
@@ -76,7 +83,7 @@ Environment::makeChildEnvironment( )
   return newEnv;
 }
 
-void 
+void
 Environment::recycleUnusedEnvs( std::set<Environment*> active)
 {
   std::set<Environment*> unusedEnvs;
@@ -97,8 +104,9 @@ std::ostream &
 operator<<( std::ostream &os, const Environment &env)
 {
   Environment::const_iterator pos;
-  for (pos = env.begin(); pos != env.end(); ++pos)
+  for (pos = env.begin(); pos != env.end(); ++pos) {
     os << (*pos).first << " = " << (*pos).second << std::endl;
+  }
 
   return os;
 }

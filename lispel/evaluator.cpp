@@ -76,7 +76,7 @@ Handle_ptr SimpleEvaluator::eval( Handle_ptr node)
     return node;                    // self-evaluating nodes
 }
 
-Handle_ptr 
+Handle_ptr
 SimpleEvaluator::evalExpression( Handle_ptr node)
    throw( RecoverableException)
 {
@@ -159,9 +159,11 @@ SimpleEvaluator::evalExpression( Handle_ptr node)
   }
 
   MCAssertNotReached( 0);
+
+  return 0;
 }
 
-Handle_ptr 
+Handle_ptr
 SimpleEvaluator::evalVariable( Handle_ptr node)
    throw( InternalInconsistency, UndefinedValue)
 {
@@ -180,8 +182,9 @@ SimpleEvaluator::evalVariable( Handle_ptr node)
 
   Handle_ptr valueNode = m_envStack.top()->lookup( node->stringValue());
 
-  if (0 == valueNode)
+  if (0 == valueNode) {
     throw UndefinedValue( node->stringValue(), __FILE__, __LINE__);
+  }
 
   return valueNode;
 }

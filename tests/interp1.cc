@@ -13,7 +13,7 @@
 using namespace std;
 
 char const* builtins[] = {
-  "lambda", "display", "car", "cdr", 
+  "lambda", "display", "car", "cdr",
   0
 };
 
@@ -25,7 +25,7 @@ int main( void)
     addCoreCommands( interp);
     addListCommands( interp);
     addMathCommands( interp);
-    
+
     int i;
     for (i=0; builtins[i] != 0; ++i) {
       Handle_ptr n = interp.toplevelLookup( builtins[i]);
@@ -34,7 +34,7 @@ int main( void)
       else
 	cout << builtins[i] << " == " << (*n) << endl;
     }
-    
+
     /*
      * Create an s-expression manually and try to execute it
      */
@@ -50,12 +50,12 @@ int main( void)
     //   +---------+          +-----------------+
     //      ^                    ^
     //   +--|--+---+          +--|--+---+
-    //   |  *  | *----------> |  *  | *----------> NIL 
+    //   |  *  | *----------> |  *  | *----------> NIL
     //   +-----+---+          +-----+---+
     interp.evaluator()->eval( exprCons);
   }
 
-  catch( Exception e) {
+  catch( const Exception &e) {
     cerr << "EXCEPTION: " << e << endl;
   }
   catch( const char *s) {
