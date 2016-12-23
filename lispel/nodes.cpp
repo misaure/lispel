@@ -209,7 +209,7 @@ operator<<( std::ostream &os, const Handle &h)
 #if defined( DEBUG) && DEBUG > 4
   std::cerr << "operator<<( ostream &, const Handle &): "
        << typetagToString( h.m_nodetype) << endl;
-#endif 
+#endif
 
   int i;
   switch( h.m_nodetype) {
@@ -262,6 +262,7 @@ operator<<( std::ostream &os, const Handle &h)
   }
 
   MCAssertNotReached( os);
+  return 0;
 }
 
 
@@ -279,7 +280,7 @@ NodeValue::~NodeValue()
 }
 
 
-void 
+void
 NodeValue::finalize()
 {
   MCAssertValidInstance();
@@ -292,21 +293,21 @@ NodeValue::eval()
   return this;
 }
 
-void 
+void
 NodeValue::incRef()
 {
   MCAssertValidInstance();
   ++m_refcount;
 }
 
-void 
+void
 NodeValue::decRef()
 {
   MCAssertValidInstance();
   --m_refcount;
 }
 
-bool 
+bool
 NodeValue::isShared()
 {
   MCAssertValidInstance();
@@ -319,20 +320,20 @@ NodeValue::isShared()
 //    return os << "#<empty@" << this << '>';
 //  }
 
-void 
+void
 NodeValue::incRef1Func( NodeValue *val)
 {
   val->incRef();
 }
 
-void 
+void
 NodeValue::decRef1Func( NodeValue *val)
 {
   val->decRef();
 }
 
 
-bool 
+bool
 NodeValue::isSequence()
 {
   return false;
@@ -415,7 +416,7 @@ StringValue::stringValue()
   return m_string;
 }
 
-int 
+int
 StringValue::length() const
 {
   MCAssertValidInstance();
@@ -446,7 +447,7 @@ VectorValue::~VectorValue()
   finalize();
 }
 
-void 
+void
 VectorValue::finalize()
 {
   MCAssertValidInstance();
@@ -455,7 +456,7 @@ VectorValue::finalize()
   //  (*pos)->finalize();
 }
 
-void 
+void
 VectorValue::incRef()
 {
   VectorValue::iterator pos;
@@ -536,7 +537,7 @@ CommandImpl::~CommandImpl()
 {
 }
 
-void 
+void
 CommandImpl::setName( const std::string &name)
 {
   m_name = name;
@@ -548,7 +549,7 @@ CommandImpl::name() const
   return m_name;
 }
 
-std::string 
+std::string
 CommandImpl::name()
 {
   return m_name;
@@ -557,7 +558,7 @@ CommandImpl::name()
 std::ostream &
 CommandImpl::printToStream( std::ostream &os) const
 {
-  throw InternalInconsistency( "printing CommandImpl base class", 
+  throw InternalInconsistency( "printing CommandImpl base class",
 					  __FILE__, __LINE__);
 }
 
@@ -596,7 +597,7 @@ CBuiltinAdapter::~CBuiltinAdapter()
 {
 }
 
-Handle_ptr 
+Handle_ptr
 CBuiltinAdapter::execute( Context &ctx, Environment *env,
          std::vector<Handle_ptr> args)
 {
@@ -618,7 +619,7 @@ BinaryPredicateAdapter::~BinaryPredicateAdapter()
    MCAssertValidInstance();
 }
 
-Handle_ptr 
+Handle_ptr
 BinaryPredicateAdapter::execute( Context &ctx, Environment *env,
 				 std::vector<Handle_ptr> args)
 {
@@ -692,28 +693,28 @@ ClosureValue::printToStream( std::ostream &os) const
   return os;
 }
 
-int 
+int
 ClosureValue::arity() const
 {
   MCAssertValidInstance();
   return m_argumentNames.size();
 }
 
-Handle_ptr 
+Handle_ptr
 ClosureValue::body()
 {
   MCAssertValidInstance();
   return m_body;
 }
 
-const 
+const
 Handle_ptr ClosureValue::body() const
 {
   MCAssertValidInstance();
   return m_body;
 }
 
-void 
+void
 ClosureValue::incRef()
 {
   MCAssertValidInstance();
@@ -740,11 +741,11 @@ ClosureValue::bindArguments( std::vector<Handle_ptr> &argValues)
     }
     return newEnv;
   }
-  
+
   MCAssertNotReached( 0);
 }
 
-void 
+void
 ClosureValue::collectReferencedEnvironments( std::set<Environment*> &active)
 {
   MCAssertValidInstance();
@@ -768,7 +769,7 @@ Hashtable::~Hashtable()
    MCAssertValidInstance();
 }
 
-Handle_ptr 
+Handle_ptr
 Hashtable::lookup( const std::string &key)
 {
   iterator pos = m_table.find( key);
@@ -777,25 +778,25 @@ Hashtable::lookup( const std::string &key)
   return (*pos).second;
 }
 
-void 
+void
 Hashtable::put( const std::string &key, Handle_ptr value)
 {
   m_table[key] = value;
 }
 
-int 
+int
 Hashtable::size()
 {
   return m_table.size();
 }
 
-void 
+void
 Hashtable::clear()
 {
   m_table.erase( m_table.begin(), m_table.end());
 }
 
-bool 
+bool
 Hashtable::remove( const std::string &key)
 {
   if (exists( key)) {
@@ -805,7 +806,7 @@ Hashtable::remove( const std::string &key)
   return false;
 }
 
-bool 
+bool
 Hashtable::exists( const std::string &key)
 {
   return (m_table.end() != m_table.find( key));
@@ -831,7 +832,7 @@ SetValue::~SetValue()
    MCAssertValidInstance();
 }
 
-bool 
+bool
 SetValue::lookup( Handle_ptr value)
 {
   MCAssertValidInstance();
@@ -841,14 +842,14 @@ SetValue::lookup( Handle_ptr value)
   return (*pos);
 }
 
-void 
+void
 SetValue::put( Handle_ptr value)
 {
   MCAssertValidInstance();
   m_set.insert( value);
 }
 
-bool 
+bool
 SetValue::remove( Handle_ptr value)
 {
   MCAssertValidInstance();
@@ -859,14 +860,14 @@ SetValue::remove( Handle_ptr value)
   return true;
 }
 
-int 
+int
 SetValue::size()
 {
   MCAssertValidInstance();
   return m_set.size();
 }
 
-void 
+void
 SetValue::clear()
 {
   MCAssertValidInstance();

@@ -3,12 +3,12 @@
 #include <lispel/defs.hh>
 #include <lispel/environment.hh>
 
-Environment::Environment()
+Environment::Environment() : m_parent(0)
 {
    //registerEnv( this);
 }
 
-Environment::Environment( Environment* env)
+Environment::Environment( Environment* env) : m_parent(0)
 {
   //assert( 0);
   //registerEnv( this);

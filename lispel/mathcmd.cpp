@@ -1,7 +1,7 @@
 #include <lispel/mathcmd.hh>
 #include <lispel/lispel.hh>
 
-Handle_ptr 
+Handle_ptr
 eqCommand( CBuiltinAdapter *owner, Context &ctx, Environment *env,
 	   std::vector<Handle_ptr> args)
 {
@@ -78,6 +78,8 @@ plusCommand( CBuiltinAdapter *owner, Context &ctx, Environment *env,
     return allInt? ctx.factory->makeInteger( static_cast<int>( result)) :
       ctx.factory->makeDouble( result);
   }
+
+  return 0;
 }
 
 Handle_ptr
@@ -106,6 +108,8 @@ subtrCommand( CBuiltinAdapter *owner, Context &ctx, Environment *env,
     return allInt? ctx.factory->makeInteger( static_cast<int>( result)) :
       ctx.factory->makeDouble( result);
   }
+
+  return 0;
 }
 
 extern Handle_ptr
@@ -131,6 +135,8 @@ mulCommand( CBuiltinAdapter *owner, Context &ctx, Environment *env,
     return allInt? ctx.factory->makeInteger( static_cast<int>( result)) :
       ctx.factory->makeDouble( result);
   }
+
+  return 0;
 }
 
 extern Handle_ptr

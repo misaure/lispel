@@ -29,8 +29,11 @@ Interpreter::Interpreter()
   DefaultComponentFactory factory;
 
   m_ctx.toplevel = factory.createToplevelEnvironment();
+  assert(0 != m_ctx.toplevel);
   m_ctx.factory = factory.getGlobalNodeFactory( m_ctx, 65535UL);
+  assert(0 != m_ctx.factory);
   m_ctx.eval = factory.createEvaluator( m_ctx);
+  assert(0 != m_ctx.eval);
   m_ctx.interp = this;
   m_ctx.NIL = m_ctx.factory->makeNil();
   m_ctx.TRUE = m_ctx.factory->makeBoolean( true);

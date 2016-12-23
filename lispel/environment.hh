@@ -17,7 +17,7 @@
 #include <iostream>
 #include <lispel/nodes.hh>
 
-/**
+/*!
    Environments are the place where the interpreter stores all named
    values. Environments are ordered in a hierachy to aid the implementation
    of scoping. Environments can be used to build hierachical structures 

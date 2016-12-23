@@ -99,13 +99,13 @@ int main( int argc, char *argv[])
   Interpreter interp;
   try {
     Lexer::initLexerModule();
-    
+
     addCoreCommands( interp);
     addListCommands( interp);
     addMathCommands( interp);
     addHashCommands( interp);
     addSetCommands( interp);
-    
+
     // gather unprocessed command line arguments
     std::list<Handle_ptr> args;
     int i;
@@ -124,7 +124,7 @@ int main( int argc, char *argv[])
       interp.repl( &infile, &ui);
     }
   }
-  catch( Exception e) {
+  catch( Exception &e) {
     std::cerr << "\nexception caught:" << std::endl;
     std::cerr << e.what() << std::endl;
   }
@@ -132,7 +132,7 @@ int main( int argc, char *argv[])
     // exceptions thrown by the C++ library
     std::cerr << "\nunknown exception!" << std::endl;
   }
-  
+
   return 0;
 }
 

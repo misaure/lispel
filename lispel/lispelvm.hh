@@ -137,6 +137,8 @@ protected:
 */
 class LispelVM {
 public:
+	typedef unsigned int size_type;
+
   LispelVM( int stacksize);
   virtual ~LispelVM();
 
@@ -156,10 +158,18 @@ public:
   Handle_ptr getResult();
   void resetRegs();
 
+  const Registers &regs() const {
+	  return m_regs;
+  }
+
+  size_type stackSize() const {
+	  return m_stackSize;
+  }
+
 protected:
   CallFrame *m_activationStack;
-  int m_stackSize;
-  int m_stackPos;
+  size_type m_stackSize;
+  size_type m_stackPos;
   Registers m_regs;
 };
 

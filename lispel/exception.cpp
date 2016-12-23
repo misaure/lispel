@@ -13,15 +13,15 @@
 #include <lispel/defs.hh>
 #include <lispel/exception.hh>
 
-Exception::Exception()
+Exception::Exception() : m_line(Exception::LINE_UNDEFINED)
 {
 }
 
-Exception::Exception(std::string _what) : m_what(_what)
+Exception::Exception(std::string _what) : m_what(_what), m_line(Exception::LINE_UNDEFINED)
 {
 }
 
-Exception::Exception(std::string what, std::string where, int line) : m_what(what)
+Exception::Exception(std::string what, std::string where, int line) : m_what(what), m_line(Exception::LINE_UNDEFINED)
 {
 }
 
@@ -41,7 +41,7 @@ InternalInconsistency::InternalInconsistency(std::string message)
 InternalInconsistency::InternalInconsistency(std::string message, std::string where, int line)
 {
 }
- 
+
 InternalInconsistency::~InternalInconsistency() throw()
 {
 }
@@ -59,7 +59,7 @@ RecoverableException::~RecoverableException() throw()
 }
 
 
-TypeException::TypeException(std::string expected) 
+TypeException::TypeException(std::string expected)
   : RecoverableException(expected, "", 0)
 {
 }
@@ -70,7 +70,7 @@ TypeException::TypeException( std::string expected, std::string where, int line)
 }
 
 TypeException::TypeException()
-  : RecoverableException( "type error") 
+  : RecoverableException( "type error")
 {
 }
 

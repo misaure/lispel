@@ -8,8 +8,8 @@ ifeq ($(debug),yes)
   CFLAGS	= -g -Wall -pipe -I.. $(DEFS)
 else
   DEFS		= -DHAVE_CONFIG_H -UDEBUG
-  CXXFLAGS	= -Wall -pipe -I.. -O2 $(DEFS)
-  CFLAGS	= -Wall -pipe -I.. -O2 $(DEFS)
+  CXXFLAGS	= -g -Wall -pipe -I.. $(DEFS)
+  CFLAGS	= -g -Wall -pipe -I.. $(DEFS)
 endif
 LDFLAGS		= -L.
 

@@ -1,0 +1,6 @@
+[package]
+
+name = "lispel"
+version = "0.0.5"
+authors = [ "Michael Saure <michael@msaure.com>" ]
+

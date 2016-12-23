@@ -19,7 +19,7 @@
 /**
    @name Standard Exceptions
    This section contains a small hierarchy of Lispel standard exceptions.
-   The most important branches are the RecoverableExceptions and the 
+   The most important branches are the RecoverableExceptions and the
    FatalExceptions. The latter will stop the sample shell to immediately
    stop execution while the first lead to a runtime error message. When you
    build an application with a Lispel exception, you should at least ensure
@@ -29,6 +29,8 @@
 
 class Exception {
 public:
+	static const int LINE_UNDEFINED = -1;
+
     Exception();
     Exception(std::string what);
     Exception(std::string what, std::string where, int line);
@@ -100,7 +102,7 @@ class ArgumentCountException : public RecoverableException {
 public:
   /**
      Create an ArgumentCountException with full debugging information.
-     The exact error message produced by this exception depends on the 
+     The exact error message produced by this exception depends on the
      signedness of the <code>expected</code> parameter.
      @param expected This paramter basically gives the number of parameters
      that were expected. If <code>expected</code is a negative value then the

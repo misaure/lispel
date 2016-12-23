@@ -1,5 +1,5 @@
 #ifndef miscclass_POINTER_HH_
-#define miscclass_POINTER_HH_
+#define miscclass_POINTER_HH_ 1
 
 #include <cstring>   // memcpy
 #include <cstdlib>   // free
@@ -23,7 +23,7 @@ public:
   /** Assign a pointer value. */
   ptr( T *cont) : m_cont( cont) {}
 
-  /** Löschen des Inhalts. */
+  /** Lï¿½schen des Inhalts. */
   ~ptr( ) {
     if (0 != m_cont)
       delete m_cont;
@@ -42,7 +42,7 @@ public:
   }
 
   /** Zugriff auf den Inhalt. */
-  T *p() { return m_cont; } 
+  T *p() { return m_cont; }
   T &operator*() { return *m_cont; }
   T *operator->() { return m_cont; }
 };
@@ -85,17 +85,19 @@ public:
 
 
   /** Zuweisung eines array. Vorher durch das Zielobjekt referenzierte Daten
-      werden gelöscht.
+      werden gelÃ¶scht.
   */
-  array &operator=( const array<T> &a) {
-    if (this != &a) {
-      if (0 != m_cont) {
-	delete [] m_cont;
-        m_cont = new T[m_size=a.m_size];
-	m_cont = memcpy( m_cont, a.m_cont, sizeof( a.m_cont));
-      }
-    }
-  }
+	array &operator=(const array<T> &a) {
+		if (this != &a) {
+			if (0 != m_cont) {
+				delete[] m_cont;
+				m_cont = new T[m_size = a.m_size];
+				m_cont = memcpy(m_cont, a.m_cont, sizeof(a.m_cont));
+			}
+		}
+
+		return *this;
+	}
 
   /** Umwandlung in den Inhaltstypen. */
   T *p() { return m_cont; }
@@ -107,8 +109,8 @@ public:
   /** Schreib- und Lesezugriff auf Elemente des Arrays. */
   reference operator[]( int i) { return m_cont[i]; }
 
-  /** Ausschlie lich lesender Zugriff auf Elemente des Arrays. Es werden
-      Kopien der Elemente zurckgeliefert.
+  /** Ausschlieï¿½lich lesender Zugriff auf Elemente des Arrays. Es werden
+      Kopien der Elemente zurï¿½ckgeliefert.
   */
   const_reference operator[]( int i) const { return m_cont[i]; }
 };
@@ -126,7 +128,7 @@ public:
   /** Zuweisung eines Zeigers. */
   c_ptr( T *c) { cont = c; }
 
-  /** Löschen des Inhalts. */
+  /** Lï¿½schen des Inhalts. */
   ~c_ptr( ) {
     if (0 != cont)
       free( cont);
@@ -143,13 +145,13 @@ public:
   }
 
   /** Zugriff auf den Inhalt. */
-  T *p() { return cont; } 
+  T *p() { return cont; }
 };
 
 
 
 /**
-   Ein Zeiger mit einem Tag zur Verwaltung von Referenzz„hlern.
+   Ein Zeiger mit einem Tag zur Verwaltung von Referenzzï¿½hlern.
    @version 0.1
    @author Michael Saure
 */
