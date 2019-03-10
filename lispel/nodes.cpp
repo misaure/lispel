@@ -262,7 +262,7 @@ operator<<( std::ostream &os, const Handle &h)
   }
 
   MCAssertNotReached( os);
-  return 0;
+  return os;
 }
 
 

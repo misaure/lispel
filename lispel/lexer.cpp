@@ -536,7 +536,6 @@ LexBuffer::toString() const
 std::ostream &
 operator<<( std::ostream &os, const LexBuffer &lb)
 {
-  assert( 0 != &lb);
   return os << lb.m_buffer;
 }
 
