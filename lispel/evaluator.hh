@@ -50,15 +50,13 @@ public:
      all arguments will be evaluated using calls to eval().
      @param node A CONS node which is to be evaluated as an s-expression.
   */
-  virtual Handle_ptr evalExpression( Handle_ptr node)
-    throw( RecoverableException) =0;
+  virtual Handle_ptr evalExpression( Handle_ptr node) =0;
 
   /**
      Evaluation of a variable boils down to looking it up in the current
      environment.
    */
-  virtual Handle_ptr evalVariable( Handle_ptr node)
-    throw( UndefinedValue, InternalInconsistency) =0;
+  virtual Handle_ptr evalVariable( Handle_ptr node) =0;
 
   /**
      Creates a new child environment the current environment.
@@ -101,10 +99,8 @@ public:
   virtual ~SimpleEvaluator();
 
   virtual Handle_ptr eval( Handle_ptr);
-  virtual Handle_ptr evalExpression( Handle_ptr)
-    throw( RecoverableException);
-  virtual Handle_ptr evalVariable( Handle_ptr)
-     throw( InternalInconsistency, UndefinedValue);
+  virtual Handle_ptr evalExpression( Handle_ptr);
+  virtual Handle_ptr evalVariable( Handle_ptr);
 };
 
 

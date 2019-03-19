@@ -8,7 +8,7 @@
  */
 
 #ifndef _lispel_FILECMD_HH_
-#define _lispel_FILECMD_HH_
+#define _lispel_FILECMD_HH_ 1
 
 #endif
 

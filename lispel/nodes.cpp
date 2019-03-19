@@ -37,7 +37,7 @@ Handle::~Handle()
   MCAssertValidInstance();
 }
 
-Handle_ptr Handle::car() throw( TypeException)
+Handle_ptr Handle::car()
 {
   MCAssertValidInstance();
 
@@ -48,7 +48,7 @@ Handle_ptr Handle::car() throw( TypeException)
   MCAssertNotReached( 0);
 }
 
-const Handle *Handle::car() const throw( TypeException)
+const Handle *Handle::car() const
 {
   MCAssertValidInstance();
 
@@ -56,31 +56,27 @@ const Handle *Handle::car() const throw( TypeException)
     return val.m_cons.car;
 
   throw TypeException( "pair", __FILE__, __LINE__);
-
-  MCAssertNotReached( 0);
 }
 
-Handle_ptr Handle::cdr() throw( TypeException)
+Handle_ptr Handle::cdr()
 {
   MCAssertValidInstance();
   if (hasType( ntCONS))
     return val.m_cons.cdr;
 
   throw TypeException( "pair", __FILE__, __LINE__);
-  MCAssertNotReached( 0);
 }
 
-const Handle *Handle::cdr() const throw( TypeException)
+const Handle *Handle::cdr() const
 {
   MCAssertValidInstance();
   if (hasType( ntCONS))
     return val.m_cons.cdr;
 
   throw TypeException( "pair", __FILE__, __LINE__);
-  MCAssertNotReached( 0);
 }
 
-void Handle::setCar( Handle_ptr car) throw( TypeException)
+void Handle::setCar( Handle_ptr car)
 {
   MCAssertValidInstance();
   assert( 0 != car);
@@ -91,7 +87,7 @@ void Handle::setCar( Handle_ptr car) throw( TypeException)
     throw TypeException( "pair", __FILE__, __LINE__);
 }
 
-void Handle::setCdr( Handle_ptr cdr) throw( TypeException)
+void Handle::setCdr( Handle_ptr cdr)
 {
   MCAssertValidInstance();
   assert( 0 != cdr);
@@ -103,7 +99,6 @@ void Handle::setCdr( Handle_ptr cdr) throw( TypeException)
 }
 
 const char *Handle::stringValue() const
-  throw( TypeException, InternalInconsistency)
 {
   MCAssertValidInstance();
   if (hasType( ntSTRING) || hasType( ntSYMBOL)) {
@@ -113,12 +108,9 @@ const char *Handle::stringValue() const
     return strval->stringValue();
   }
   throw TypeException( "string or symbol", __FILE__, __LINE__);
-
-  MCAssertNotReached( 0);
 }
 
 char *Handle::stringValue()
-  throw( TypeException, InternalInconsistency)
 {
   MCAssertValidInstance();
   if (hasType( ntSTRING) || hasType( ntSYMBOL) || hasType( ntKEYWORD)) {
@@ -132,7 +124,7 @@ char *Handle::stringValue()
   MCAssertNotReached( 0);
 }
 
-double Handle::doubleValue() const throw( TypeException)
+double Handle::doubleValue() const
 {
   MCAssertValidInstance();
   if (hasType( ntDOUBLE)) {
@@ -143,7 +135,7 @@ double Handle::doubleValue() const throw( TypeException)
      throw TypeException( "double", __FILE__, __LINE__);
 }
 
-Handle *Handle::body() throw( TypeException)
+Handle *Handle::body()
 {
   MCAssertValidInstance();
   if (hasType( ntCLOSURE)) {
@@ -155,7 +147,6 @@ Handle *Handle::body() throw( TypeException)
 }
 
 Environment *Handle::bindArguments( std::vector<Handle_ptr> &argValues)
-  throw( TypeException)
 {
    MCAssertValidInstance();
    if (!hasType( ntCLOSURE))
@@ -166,7 +157,7 @@ Environment *Handle::bindArguments( std::vector<Handle_ptr> &argValues)
    return closure->bindArguments( argValues);
 }
 
-int Handle::integerValue() const throw( TypeException)
+int Handle::integerValue() const
 {
   MCAssertValidInstance();
   if (hasType( ntINTEGER) || hasType( ntCHARACTER)) {
@@ -175,7 +166,7 @@ int Handle::integerValue() const throw( TypeException)
   throw TypeException( "integer", __FILE__, __LINE__);
 }
 
-bool Handle::booleanValue() const throw( TypeException)
+bool Handle::booleanValue() const
 {
   MCAssertValidInstance();
   if (hasType( ntBOOLEAN)) {
@@ -201,7 +192,6 @@ void Handle::incRef()
 
 std::ostream &
 operator<<( std::ostream &os, const Handle &h)
-  throw( InternalInconsistency)
 {
   MCAssert( 0 != &h && 0 != &os, "trying to print (null) handle");
   MCAssert( 0 != &os, "trying to print on (null) stream");
@@ -466,7 +456,6 @@ VectorValue::incRef()
 
 const Handle *
 VectorValue::elementAt( int i) const
-  throw( RecoverableException)
 {
   MCAssertValidInstance();
   if (i < static_cast<int>( m_values.size()))
@@ -478,7 +467,7 @@ VectorValue::elementAt( int i) const
 }
 
 Handle *
-VectorValue::elementAt( int i) throw( RecoverableException)
+VectorValue::elementAt( int i)
 {
   MCAssertValidInstance();
   if (i < static_cast<int>( m_values.size()))
@@ -881,4 +870,3 @@ SetValue::printToStream( std::ostream &os) const
   //FIXME: might be printed as list
   return os << "#<set@" << this << ">";
 }
-

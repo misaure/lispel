@@ -18,8 +18,7 @@
  * SPECIAL FORMS
  */
 
-Handle_ptr
-LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   MCAssertValidInstance();
   assert( 0 != env && 0 != ctx.eval && 0 != expr);
@@ -61,31 +60,29 @@ LambdaCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 }
 
 
-Handle_ptr
-CondCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
-{
-   Handle_ptr args = expr->cdr();
+Handle_ptr CondCommand::execute(Context &ctx, Environment *env, Handle_ptr expr) {
+	Handle_ptr args = expr->cdr();
 
-   Handle_ptr branch;   // iterate over all clauses/branches
-   for (branch=args; !eq( branch, ctx.NIL); branch=branch->cdr()) {
-      Handle_ptr exprList = branch->car();
-      Handle_ptr evaluated = exprList->car();
+	Handle_ptr branch;   // iterate over all clauses/branches
+	for (branch = args; !eq(branch, ctx.NIL); branch = branch->cdr()) {
+		Handle_ptr exprList = branch->car();
+		Handle_ptr evaluated = exprList->car();
 
-      if (!eq( ctx.eval->eval( evaluated), ctx.FALSE)) {
-        // expression evaluates to true, so evaluate remaining expressions in
-	// the current branch and return result of last evaluation
-	for ( exprList=exprList->cdr(); !eq( exprList, ctx.NIL); exprList=exprList->cdr()) {
-	    evaluated = ctx.eval->eval( exprList->car());
-        }
-	return evaluated;
-      }
-   }
-   return ctx.NIL; //this is left unspecified by R[45]RS
+		if (!eq(ctx.eval->eval(evaluated), ctx.FALSE)) {
+			// expression evaluates to true, so evaluate remaining expressions in
+			// the current branch and return result of last evaluation
+			for (exprList = exprList->cdr(); !eq(exprList, ctx.NIL); exprList =
+					exprList->cdr()) {
+				evaluated = ctx.eval->eval(exprList->car());
+			}
+			return evaluated;
+		}
+	}
+	return ctx.NIL; //this is left unspecified by R[45]RS
 }
 
 
-Handle_ptr
-QuoteCommand::execute( Context &ctx, Environment *env, Handle_ptr args)
+Handle_ptr QuoteCommand::execute( Context &ctx, Environment *env, Handle_ptr args)
 {
   MCAssertValidInstance();
   assert( 0 != args);
@@ -100,8 +97,7 @@ QuoteCommand::execute( Context &ctx, Environment *env, Handle_ptr args)
   return args->cdr()->car();
 }
 
-Handle_ptr
-DefineCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr DefineCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   MCAssertValidInstance();
 
@@ -132,8 +128,7 @@ DefineCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 
 
 
-Handle_ptr
-LetCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr LetCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   MCAssertValidInstance();
   MCAssert( 0 != expr && !eq( expr, ctx.NIL), "illegal expression");
@@ -188,8 +183,7 @@ LetCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 }
 
 
-Handle_ptr
-LetStarCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr LetStarCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   MCAssertValidInstance();
   MCAssert( 0 != expr && !eq( expr, ctx.NIL), "illegal expression");
@@ -243,8 +237,7 @@ LetStarCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 }
 
 
-Handle_ptr
-IfCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr IfCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   Handle_ptr args = expr->cdr();
   if (3 != listlength( args))
@@ -257,8 +250,7 @@ IfCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 }
 
 
-Handle_ptr
-AndCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr AndCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   Handle_ptr args = expr->cdr();
   int argc = listlength( args);
@@ -277,8 +269,7 @@ AndCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   return evaluated;
 }
 
-Handle_ptr
-OrCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr OrCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
   Handle_ptr args = expr->cdr();
   int argc = listlength( args);
@@ -299,8 +290,7 @@ OrCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
   return ctx.FALSE;
 }
 
-Handle_ptr
-TimeCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
+Handle_ptr TimeCommand::execute( Context &ctx, Environment *env, Handle_ptr expr)
 {
    clock_t stopwatch = clock();
    Handle_ptr pos;
@@ -395,16 +385,14 @@ TypePredicate::~TypePredicate()
 {
 }
 
-Handle_ptr
-TypePredicate::execute( Context &ctx, Environment *env, std::vector<Handle_ptr> args)
+Handle_ptr TypePredicate::execute( Context &ctx, Environment *env, std::vector<Handle_ptr> args)
 {
   if (1 != args.size())
     throw ArgumentCountException( 2, __FILE__, __LINE__);
   return (args[0]->hasType( m_type))? ctx.TRUE : ctx.FALSE;
 }
 
-Handle_ptr
-notCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
+Handle_ptr notCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
 	    std::vector<Handle_ptr> args)
 {
   if (1 != args.size())
@@ -414,8 +402,7 @@ notCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
   return ctx.FALSE;
 }
 
-Handle_ptr
-versionCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
+Handle_ptr versionCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
 	        std::vector<Handle_ptr> args)
 {
    if (0 != args.size()) {
@@ -424,8 +411,7 @@ versionCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
    return ctx.factory->makeString( LISPEL_VERSION);
 }
 
-Handle_ptr
-exitCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
+Handle_ptr exitCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
 	     std::vector<Handle_ptr> args)
 {
    if (0 != args.size()) {
@@ -436,8 +422,7 @@ exitCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
    return ctx.TRUE;
 }
 
-Handle_ptr
-loadCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
+Handle_ptr loadCommand( CBuiltinAdapter *adapter, Context &ctx, Environment *env,
 	     std::vector<Handle_ptr> args)
 {
    if (1 != args.size())
@@ -488,4 +473,3 @@ void addCoreCommands( Interpreter &interp)
   interp.addBuiltin( "keyword?", new TypePredicate( Handle::ntKEYWORD));
   interp.addBuiltin( "set?", new TypePredicate( Handle::ntSET));
 }
-

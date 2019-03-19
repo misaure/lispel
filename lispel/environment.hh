@@ -17,10 +17,15 @@
 #include <iostream>
 #include <lispel/nodes.hh>
 
+// struct env_t {
+//     env_t *parent;
+//     hash_map_t entries;
+// };
+
 /*!
    Environments are the place where the interpreter stores all named
    values. Environments are ordered in a hierachy to aid the implementation
-   of scoping. Environments can be used to build hierachical structures 
+   of scoping. Environments can be used to build hierachical structures
    through parent links provided for each Environment instance.
    @version 0.3
 */
@@ -41,14 +46,14 @@ protected:
 
 public:
   Environment();
-  
+
   /**
      Create a new Environment instance with a given parent environment.
      @param vptr The parent environment.
   */
   explicit Environment( Environment *vptr);
   ~Environment();
- 
+
 
   /**
      STL-iterator which refers to the first element.

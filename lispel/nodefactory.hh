@@ -94,8 +94,7 @@ public:
      value, if any, will be derived from the token's lexical value.
      @param tok A token which is to be translated to a memory cell.
   */
-  virtual Handle_ptr nodeFromToken( const Token_ptr tok)
-    throw( InternalInconsistency);
+  virtual Handle_ptr nodeFromToken( const Token_ptr tok);
 
   /**
      Return the number of preallocated memory cells still available. This
@@ -134,7 +133,7 @@ protected:
   virtual Handle_ptr makeNil();
 
   /// Allocates a new node on the heap.
-  inline Handle_ptr allocNode( Handle::NodeType) throw( MemoryExhausted);
+  inline Handle_ptr allocNode( Handle::NodeType);
 
   /// Return a node to the pool of free nodes.
   inline void recycleNode( Handle_ptr);

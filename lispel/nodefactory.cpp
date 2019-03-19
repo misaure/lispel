@@ -204,7 +204,6 @@ Handle_ptr NodeFactory::makeClosure( std::list<Handle_ptr> args, Environment *en
 // HINT: this should be turned into a global function which takes a token and
 // a NodeFactory as an argument and returns a new Handle
 Handle_ptr NodeFactory::nodeFromToken( const Token_ptr tok)
-  throw( InternalInconsistency)
 {
   MCAssertValidInstance();
   assert( 0 != tok);
@@ -318,7 +317,6 @@ std::set<Environment*> NodeFactory::activeEnvironments()
 }
 
 Handle_ptr NodeFactory::allocNode( Handle::NodeType nt)
-  throw( MemoryExhausted)
 {
   MCAssertValidInstance();
   if (!m_free.empty()) {

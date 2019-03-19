@@ -58,9 +58,9 @@ static struct {
   { 0,          0 },
 };
 
-static std::map<std::string,char> charnameMap; 
+static std::map<std::string,char> charnameMap;
 
-void 
+void
 Lexer::initLexerModule()
 {
   int i;
@@ -217,7 +217,7 @@ std::string Token::convertSymbol( std::string s)
 std::ostream &operator<<( std::ostream &os, const Token &t)
 {
   MCAssert( 0 != &t, "output operator called for null Token inst");
-  return os << tokennumToString( t.m_tokennum) 
+  return os << tokennumToString( t.m_tokennum)
 	    << " \"" << t.m_lexval << '"';
 }
 
@@ -235,7 +235,6 @@ typedef enum {
 
 std::istream &operator>>( std::istream &is, Token &t)
 {
-  assert( 0 != &t);
   LexBuffer buffer( Token::M_LEXBUFFERSIZE);
 
   LexerState state = lsINITIAL;
@@ -370,7 +369,7 @@ std::istream &operator>>( std::istream &is, Token &t)
 	t.m_lexval = buffer.toString();
       }
       return is;
-      
+
     case lsID:
       for (;;) {
         if (is_chartype( c, CHARTYPE_NONID) || isspace( c) || is.eof()) {
@@ -538,4 +537,3 @@ operator<<( std::ostream &os, const LexBuffer &lb)
 {
   return os << lb.m_buffer;
 }
-

@@ -78,7 +78,6 @@ Handle_ptr SimpleEvaluator::eval( Handle_ptr node)
 
 Handle_ptr
 SimpleEvaluator::evalExpression( Handle_ptr node)
-   throw( RecoverableException)
 {
   MCAssertValidInstance();
   assert( 0 != node);
@@ -165,7 +164,6 @@ SimpleEvaluator::evalExpression( Handle_ptr node)
 
 Handle_ptr
 SimpleEvaluator::evalVariable( Handle_ptr node)
-   throw( InternalInconsistency, UndefinedValue)
 {
   MCAssertValidInstance();
   assert( 0 != node);

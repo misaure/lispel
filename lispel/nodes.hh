@@ -4,7 +4,7 @@
  *   Implementation of tagged memory cells on which the interpreter operates.
  *
  * (c) 1999-2001 by Michael Saure <MichaelSaure@web.de>
- * 
+ *
  * RCSID: $Id: nodes.hh,v 1.2 2001/12/16 21:10:09 michael Exp $
  */
 
@@ -68,7 +68,7 @@ public:
   /**
      Increments the reference count by one. This method can either be used to
      set a GC tag or for implementation automatic memory management based on
-     reference counting. 
+     reference counting.
   */
   virtual void incRef();
 
@@ -89,7 +89,7 @@ public:
      @return The stream given as argument after the value has been printed.
   */
   virtual std::ostream &printToStream( std::ostream &os) const =0;
-  
+
   /**
      Implements an STL compliant unary function for printing NodeValue
      objects. The function operates on pointers to NodeValues to support
@@ -150,7 +150,7 @@ public:
   virtual BidirectionalIterator *getBidirectionalIterator();
 
   /**
-    Create an iterator which allows random access to all elements of a 
+    Create an iterator which allows random access to all elements of a
     sequence.
     @return The default implementation always return 0, which means that no
     iterator of that type is available.
@@ -208,10 +208,8 @@ public:
 
   virtual void finalize();
   virtual void incRef();
-  virtual Handle *elementAt( int i)
-    throw( RecoverableException);
-  virtual const Handle *elementAt( int i) const
-    throw( RecoverableException);
+  virtual Handle *elementAt( int i);
+  virtual const Handle *elementAt( int i) const;
   virtual size_type length() const;
   virtual std::ostream &printToStream( std::ostream &os) const;
 
@@ -261,7 +259,7 @@ public:
 
   /**
      Execute the function in the given environment with the given arguments.
-     The arguments will be evaluated, so this class can't be used to 
+     The arguments will be evaluated, so this class can't be used to
      implement special forms.
    */
   virtual Handle_ptr execute( Context &ctx, Environment *env, std::vector<Handle_ptr> args) =0;
@@ -273,19 +271,17 @@ public:
 */
 class CBuiltinAdapter : public BuiltinValue {
 public:
-  typedef Handle_ptr (*cimpl)(CBuiltinAdapter*, Context&, Environment*,
-                              std::vector<Handle_ptr>);
+  typedef Handle_ptr (*cimpl)(CBuiltinAdapter*, Context&, Environment*, std::vector<Handle_ptr>);
 
   CBuiltinAdapter( cimpl cfun);
   virtual ~CBuiltinAdapter();
 
   /**
-    The Adapter object itself will also be passed as an argument to the 
+    The Adapter object itself will also be passed as an argument to the
     implementation function so that the function can request information
     about its name etc.
    */
-  virtual Handle_ptr execute( Context &ctx, Environment *env,
-                              std::vector<Handle_ptr> args);
+  virtual Handle_ptr execute( Context &ctx, Environment *env, std::vector<Handle_ptr> args);
 protected:
    cimpl m_func;
 }; /*class CBuiltinAdapter*/
@@ -310,7 +306,7 @@ public:
      Checks the number of arguments and if exactly two arguments have been
      passed via args the wrapped binary predicate will be called.
      @return The result of executing the wrapped binary predicate after
-     converting it to a Lispel value. 
+     converting it to a Lispel value.
   */
   Handle_ptr execute( Context &ctx, Environment *env, std::vector<Handle_ptr> args);
 
@@ -462,7 +458,7 @@ public:
   /**
      Follows the chain of binding environments from the closure's private
      environment up to the toplevel binding environment and enters them into
-     the set passed by reference. This function is used to garbage collect 
+     the set passed by reference. This function is used to garbage collect
      unreferenced (dropped) environments.
   */
   void collectReferencedEnvironments( std::set<Environment*>&);
@@ -525,7 +521,7 @@ public:
     evaluated. This allows adding special forms as needed.
    */
   static const flagstype SPECIALFLAG;
-    
+
   static const flagstype WATCHFLAG;
 
   /**
@@ -577,39 +573,37 @@ public:
     return (m_nodetype == ntCONS && 0 == val.m_cons.car && 0 == val.m_cons.cdr);
   }
 
-  Handle_ptr car() throw( TypeException);
-  const Handle *car() const throw( TypeException);
-  Handle_ptr cdr() throw( TypeException);
-  const Handle *cdr() const throw( TypeException);
-  void setCar( Handle_ptr car) throw( TypeException);
-  void setCdr( Handle_ptr car) throw( TypeException);
+  Handle_ptr car();
+  const Handle *car() const;
+  Handle_ptr cdr();
+  const Handle *cdr() const;
+  void setCar( Handle_ptr car);
+  void setCdr( Handle_ptr car);
 
   /**
      Get the literal string value of a node.
      @exception lispel_exception Thrown if the node doesn't contain a string
      value.
   */
-  const char *stringValue() const
-    throw( TypeException, InternalInconsistency);
-  char  *stringValue()
-    throw( TypeException, InternalInconsistency);
+  const char *stringValue() const;
+  char  *stringValue();
 
   /**
      Get the literal double value of a node.
      @exception lispel_exception Thrown if the node doesn't contain a double
      value.
   */
-  double doubleValue() const throw( TypeException);
+  double doubleValue() const;
 
   /**
      Get the integer value of a memory cell. Applicable only to ntINTEGER type
      cells.
      @exception lispel_exception Thrown if the cell isn't of type ntINTEGER.
   */
-  int    integerValue() const throw( TypeException);
-  bool   booleanValue() const throw( TypeException);
+  int    integerValue() const;
+  bool   booleanValue() const;
 
-  Handle_ptr body() throw( TypeException);
+  Handle_ptr body();
 
   /**
     Get the NodeValue object referenced by this handle instance.
@@ -626,34 +620,32 @@ public:
   bool tagged() { return 0 != m_refcount; }
 
   /**
-     Creates a new binding environment which contains the bindings of the 
+     Creates a new binding environment which contains the bindings of the
      actual parameters for a lambda application. The new environment will be
-     a direct descendant of the environment stored upon creation of the 
+     a direct descendant of the environment stored upon creation of the
      closure (to implement lexical binding).
      @param argvalues Contains the actual parameter (values) for a application
      of a closure. The vector length must equal the closure's arity. Each of
-     the values stored in this parameter will be entered into the new 
+     the values stored in this parameter will be entered into the new
      environment under the name of the corresponding formal parameter. This
      officially happens in an unspecified order (and, in reality, in the
      from left to right).
-     @return A new binding environment in which the formal parameters of a 
+     @return A new binding environment in which the formal parameters of a
      closure are bound to the actual parameters computed for a specific
      application.
      @exception lispel_exception Will be thrown if the number of actual
      parameters doesn't match the number of formal parameters.
   */
-  Environment *bindArguments( std::vector<Handle_ptr> &argvalues)
-    throw( TypeException);
+  Environment *bindArguments( std::vector<Handle_ptr> &argvalues);
 
   /// <b>NOTE:</b> stub only!
   static NodeType registerType( NodeValue *td, const char *name);
 
   /**
-     This function implements printing the contents of a memory cell in the 
+     This function implements printing the contents of a memory cell in the
      style supported by the R4RS 'display' function.
   */
-  friend std::ostream &operator<<( std::ostream &os, const Handle &h)
-    throw( InternalInconsistency);
+  friend std::ostream &operator<<( std::ostream &os, const Handle &h);
   friend class NodeFactory;
   friend class GarbageCollector;
 
@@ -675,7 +667,7 @@ protected:
     bool m_boolValue;
 
     /// immediatly stored arithmetic vectors, i.e. arrays of double values
-    struct { 
+    struct {
        double *data;
        int length;
     } m_avector;
